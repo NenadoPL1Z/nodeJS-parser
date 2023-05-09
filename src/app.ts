@@ -9,7 +9,6 @@ import {
   sendSuccessResponse,
 } from "@/src/lib/services/services";
 import { parseUser } from "@/src/lib/services/parser/parseUser";
-import { API_ERROR_SCHEDULE } from "@/src/lib/constants/api/API_ERROR_SCHEDULE";
 import { parseSchedule } from "@/src/lib/services/parser/parseSchedule";
 import path from "path";
 
@@ -37,8 +36,10 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
         .then((response) => {
           if (typeof response === "string") {
             sendSuccess({
-              key: "userName",
-              data: response,
+              data: {
+                userName: response,
+                updatedAt: SCHEDULE_UPDATE_INTERVAL,
+              },
             });
           }
           sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
