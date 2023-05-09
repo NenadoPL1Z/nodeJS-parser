@@ -13,3 +13,10 @@ export const sendErrorResponse = (res: express.Response) => {
     res.json({ error });
   };
 };
+
+export const getStaticFolderPath = () => {
+  const nestedFolderCount = 3;
+  const dirArr = __dirname.split("/");
+
+  return dirArr.slice(0, dirArr.length - nestedFolderCount).join("/");
+};

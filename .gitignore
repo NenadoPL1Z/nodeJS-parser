@@ -1,6 +1,7 @@
 /node_modules
 /.idea
 /.vscode
+/static/jsons/schedule.json
 
 .env
 .env.prodcution

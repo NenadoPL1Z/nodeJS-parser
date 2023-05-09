@@ -5,13 +5,13 @@ const loginURL = "https://moodle.preco.ru/login/index.php";
 const loginInputElemSelector = "#username";
 const passwordInputElemSelector = "#password";
 const authFormSendButtonSelector = "#loginbtn";
-const psevdonimSelector = "#page-header > div > div:last-child > h2";
+const pseudonymSelector = "#page-header > div > div:last-child > h2";
 
 export const parseUser = async (login: string, password: string) => {
   try {
     const browser = await puppeteer.launch({ headless: false });
-
     const page = await browser.newPage();
+
     await page.goto(loginURL);
     await page.setViewport({ width: 1920, height: 1080 });
 
@@ -24,11 +24,13 @@ export const parseUser = async (login: string, password: string) => {
     await page.waitForSelector(authFormSendButtonSelector);
     await page.click(authFormSendButtonSelector);
 
-    await page.waitForSelector(psevdonimSelector);
-    const FIOElement = await page.$(psevdonimSelector);
+    await page.waitForSelector(pseudonymSelector);
+    const FIOElement = await page.$(pseudonymSelector);
 
     const pseudonym =
       (await page.evaluate((el) => el?.textContent, FIOElement)) || "";
+
+    await browser.close();
 
     return pseudonym.trim();
   } catch (e) {
