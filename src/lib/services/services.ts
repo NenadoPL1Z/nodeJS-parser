@@ -1,7 +1,9 @@
 import express from "express";
 
+type SuccessArg = { key?: string; data: any };
+
 export const sendSuccessResponse = (res: express.Response) => {
-  return (data: any, key = "data"): void => {
+  return ({ key = "data", data }: SuccessArg): void => {
     res.status(200);
     res.json({ [key]: data });
   };

@@ -35,7 +35,13 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
     if (login && password) {
       return await parseUser(login, password)
         .then((response) => {
-          sendSuccess(response, "userName");
+          if (typeof response === "string") {
+            sendSuccess({
+              key: "userName",
+              data: response,
+            });
+          }
+          sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
         })
         .catch(() => {
           sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
@@ -44,17 +50,6 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
     sendError(400, API_ERROR_USER_AUTH.INVALID_DATA);
   } catch (e) {
     sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
-  }
-});
-
-app.get("/schedule", async (req: express.Request, res: express.Response) => {
-  const sendSuccess = sendSuccessResponse(res);
-  const sendError = sendErrorResponse(res);
-
-  try {
-    return sendSuccess([]);
-  } catch (e) {
-    sendError(400, API_ERROR_SCHEDULE.INVALID_REQUEST);
   }
 });
 

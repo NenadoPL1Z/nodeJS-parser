@@ -1,38 +1,28 @@
-import puppeteer from "puppeteer";
+import { authUser, checkAuthUser } from "@/src/lib/services/parser/authUser";
+import { BrowserModel } from "@/src/lib/models/BrowserModel";
+import { API_ERROR_USER_AUTH } from "@/src/lib/constants/api/API_ERROR_NAMESPACES";
 
-const loginURL = "https://moodle.preco.ru/login/index.php";
-
-const loginInputElemSelector = "#username";
-const passwordInputElemSelector = "#password";
-const authFormSendButtonSelector = "#loginbtn";
-const pseudonymSelector = "#page-header > div > div:last-child > h2";
+const PSEUDONYM_SELECTOR = "#page-header > div > div:last-child > h2";
 
 export const parseUser = async (login: string, password: string) => {
   try {
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
+    const authPage = (await authUser(login, password)) as BrowserModel;
 
-    await page.goto(loginURL);
-    await page.setViewport({ width: 1920, height: 1080 });
+    if (checkAuthUser(authPage)) {
+      const { browser, page } = authPage;
 
-    await page.waitForSelector(loginInputElemSelector);
-    await page.type(loginInputElemSelector, login);
+      await page.waitForSelector(PSEUDONYM_SELECTOR);
+      const FIOElement = await page.$(PSEUDONYM_SELECTOR);
 
-    await page.waitForSelector(passwordInputElemSelector);
-    await page.type(passwordInputElemSelector, password);
+      const pseudonym =
+        (await page.evaluate((el) => el?.textContent, FIOElement)) || "";
 
-    await page.waitForSelector(authFormSendButtonSelector);
-    await page.click(authFormSendButtonSelector);
+      await browser.close();
 
-    await page.waitForSelector(pseudonymSelector);
-    const FIOElement = await page.$(pseudonymSelector);
+      return pseudonym.trim();
+    }
 
-    const pseudonym =
-      (await page.evaluate((el) => el?.textContent, FIOElement)) || "";
-
-    await browser.close();
-
-    return pseudonym.trim();
+    new Error(API_ERROR_USER_AUTH.INVALID_REQUEST);
   } catch (e) {
     return e;
   }
