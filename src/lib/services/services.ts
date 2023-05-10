@@ -8,6 +8,7 @@ type SuccessArg = { key?: string; data: any };
 export const sendSuccessResponse = (res: express.Response) => {
   return ({ key = "data", data }: SuccessArg): void => {
     res.status(200);
+    res.setHeader("Content-Type", "application/json");
     res.json({ [key]: data });
   };
 };
