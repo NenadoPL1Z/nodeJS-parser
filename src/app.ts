@@ -24,6 +24,10 @@ app.use(
 app.use(bodyParser.json());
 app.use(express.static(path.join(getStaticFolderPath(), "static")));
 
+app.get("/", async (req: express.Request, res: express.Response) => {
+  res.json("Preco parser");
+});
+
 app.post("/auth/login", async (req: express.Request, res: express.Response) => {
   const sendSuccess = sendSuccessResponse(res);
   const sendError = sendErrorResponse(res);
