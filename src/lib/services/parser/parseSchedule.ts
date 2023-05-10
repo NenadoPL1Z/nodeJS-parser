@@ -1,13 +1,19 @@
 import { authUser, checkAuthUser } from "@/src/lib/services/parser/authUser";
 import { ADMIN_LOGIN, ADMIN_PASSWORD } from "@/src/lib/constants/constants";
 import { BrowserModel } from "@/src/lib/models/BrowserModel";
-import { getGroupListData, getScheduleData } from "@/src/lib/services/services";
+import {
+  createScheduleJSON,
+  getGroupListData,
+  getScheduleData,
+} from "@/src/lib/services/services";
+import { GroupSchedulesModel } from "@/src/lib/models/ScheduleModel";
 
 const SCHEDULE_URL =
   "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.php";
 
 const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
+export const SCHEDULE_CONTAINER_SELECTOR = "urk_shedule";
 
 export const parseSchedule = async () => {
   try {
@@ -19,23 +25,42 @@ export const parseSchedule = async () => {
     if (checkAuthUser(authPage)) {
       const { browser, page } = authPage;
 
-      page.goto(SCHEDULE_URL);
+      await page.goto(SCHEDULE_URL);
+
       await page.waitForSelector(GROUPS_LIST_SELECTOR);
       await page.waitForSelector(SEND_BUTTON_SELECTOR);
 
       const groupListData = await page.evaluate(getGroupListData);
 
-      // for (let i = 0; i < groupListData.length; i++) {
-      const currentItem = groupListData[0];
+      const result: GroupSchedulesModel[] = [];
 
-      await page.select(GROUPS_LIST_SELECTOR, currentItem.value);
-      await page.click(SEND_BUTTON_SELECTOR);
+      for (let i = 0; i < groupListData.length; i++) {
+        const currentGroup = groupListData[i];
 
-      // await page.evaluate(getScheduleData);
-      // }
+        await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
+        await page.click(SEND_BUTTON_SELECTOR);
 
-      // await browser.close();
-      // createScheduleJSON({ test: 777 });
+        await page.waitForNavigation({
+          timeout: 120000,
+          waitUntil: ["load", "domcontentloaded", "networkidle2"],
+        });
+        await page.waitForFunction(() => document.readyState === "complete");
+
+        const groupScheduleData = await page.evaluate(getScheduleData);
+
+        result.push({
+          name: currentGroup.text,
+          value: currentGroup.value,
+          schedules: groupScheduleData,
+        });
+
+        // await page.waitForTimeout(5000);
+      }
+
+      console.log(result);
+
+      await browser.close();
+      createScheduleJSON({ createdAt: new Date().getDate(), result });
 
       return;
     }
