@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "preco-parser",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev"
+}
