@@ -35,7 +35,7 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
       return await parseUser(login, password)
         .then((response) => {
           if (typeof response === "string") {
-            sendSuccess({
+            return sendSuccess({
               data: {
                 userName: response,
                 updatedAt: SCHEDULE_UPDATE_INTERVAL,

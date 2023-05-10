@@ -13,7 +13,6 @@ const SCHEDULE_URL =
 
 const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
-export const SCHEDULE_CONTAINER_SELECTOR = "urk_shedule";
 
 export const parseSchedule = async () => {
   try {
@@ -42,7 +41,7 @@ export const parseSchedule = async () => {
 
         await page.waitForNavigation({
           timeout: 120000,
-          waitUntil: ["load", "domcontentloaded", "networkidle2"],
+          waitUntil: ["load", "networkidle2"],
         });
         await page.waitForFunction(() => document.readyState === "complete");
 
@@ -54,17 +53,14 @@ export const parseSchedule = async () => {
           schedules: groupScheduleData,
         });
 
-        // await page.waitForTimeout(5000);
+        await page.waitForTimeout(2000);
       }
 
-      console.log(result);
-
       await browser.close();
-      createScheduleJSON({ createdAt: new Date().getDate(), result });
+      createScheduleJSON({ createdAt: new Date().getTime(), result });
 
       return;
     }
-    console.log("Ошибка авторизации администратора");
   } catch (e) {
     console.log(e);
   }
