@@ -9,6 +9,13 @@ import {
 import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
 import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
+import { parseSchedule } from "./lib/services/parser/parseSchedule";
+
+// TODO: ПРОЕКТ НЕ РАБОТАЕТ ЛОКАЛЬНО. ТОЛЬКО НА VERCEL DEPLOY - (https://preco-parser.vercel.app/)
+// Этапы исправления
+// 1 - Удалить в package.json объект engines
+// 2 - Обновить puppeteer-core до последней версии
+// 3 - Удалить any и настроить типизацию
 
 const app = express();
 
@@ -80,6 +87,6 @@ app.post(
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
-  // parseSchedule();
-  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  parseSchedule();
+  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });

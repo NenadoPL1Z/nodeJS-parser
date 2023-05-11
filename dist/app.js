@@ -10,6 +10,12 @@ const services_1 = require("./lib/services/services");
 const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
 const API_ERROR_NAMESPACES_1 = require("./lib/constants/api/API_ERROR_NAMESPACES");
+const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
+// TODO: ПРОЕКТ НЕ РАБОТАЕТ ЛОКАЛЬНО. ТОЛЬКО НА VERCEL DEPLOY - (https://preco-parser.vercel.app/)
+// Этапы исправления
+// 1 - Удалить в package.json объект engines
+// 2 - Обновить puppeteer-core до последней версии
+// 3 - Удалить any и настроить типизацию
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({
@@ -64,7 +70,7 @@ app.post("/api/auth/login", async (req, res) => {
 });
 app.listen(constants_1.PORT, () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
-    // parseSchedule();
-    // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+    (0, parseSchedule_1.parseSchedule)();
+    setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });
 //# sourceMappingURL=app.js.map

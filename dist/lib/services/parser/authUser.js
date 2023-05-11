@@ -24,6 +24,8 @@ const authUser = async (login, password) => {
             }
             : {
                 headless: false,
+                // Для локально запуска нужно
+                // executablePath: puppeteer.executablePath("chrome"),
             };
         const browser = await puppeteer_core_1.default.launch(puppeteerConfig);
         const page = await browser.newPage();

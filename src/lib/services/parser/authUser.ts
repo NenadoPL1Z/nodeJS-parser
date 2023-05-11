@@ -4,6 +4,9 @@ import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
 import { IS_VERSCEL } from "../../constants/constants";
 
+//? В последней версии puppeteer-core есть эта типизация
+type PuppeteerLaunchOptions = any;
+
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
@@ -16,7 +19,7 @@ export const authUser: AuthUserFunction<
   Promise<BrowserModel | unknown>
 > = async (login, password) => {
   try {
-    const puppeteerConfig: any = IS_VERSCEL
+    const puppeteerConfig: PuppeteerLaunchOptions = IS_VERSCEL
       ? {
           args: chromium.args,
           defaultViewport: chromium.defaultViewport,
@@ -27,6 +30,8 @@ export const authUser: AuthUserFunction<
         }
       : {
           headless: false,
+          // Для локально запуска нужно
+          // executablePath: puppeteer.executablePath("chrome"),
         };
 
     const browser = await puppeteer.launch(puppeteerConfig);
