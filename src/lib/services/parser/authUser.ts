@@ -2,7 +2,6 @@ import puppeteer from "puppeteer-core";
 import chromium from "chrome-aws-lambda";
 import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
-import { PuppeteerLaunchOptions } from "puppeteer-core";
 import { IS_VERSCEL } from "../../constants/constants";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
@@ -17,18 +16,17 @@ export const authUser: AuthUserFunction<
   Promise<BrowserModel | unknown>
 > = async (login, password) => {
   try {
-    const puppeteerConfig: PuppeteerLaunchOptions = IS_VERSCEL
+    const puppeteerConfig: any = IS_VERSCEL
       ? {
           args: chromium.args,
           defaultViewport: chromium.defaultViewport,
           executablePath:
             (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
           ignoreHTTPSErrors: true,
-          headless: true,
+          headless: false,
         }
       : {
           headless: false,
-          executablePath: puppeteer.executablePath("chrome"),
         };
 
     const browser = await puppeteer.launch(puppeteerConfig);

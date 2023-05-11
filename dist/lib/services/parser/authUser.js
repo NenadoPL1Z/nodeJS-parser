@@ -20,11 +20,10 @@ const authUser = async (login, password) => {
                 defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
                 executablePath: (await chrome_aws_lambda_1.default.executablePath) || LOCAL_CHROME_EXECUTABLE,
                 ignoreHTTPSErrors: true,
-                headless: true,
+                headless: false,
             }
             : {
                 headless: false,
-                executablePath: puppeteer_core_1.default.executablePath("chrome"),
             };
         const browser = await puppeteer_core_1.default.launch(puppeteerConfig);
         const page = await browser.newPage();
