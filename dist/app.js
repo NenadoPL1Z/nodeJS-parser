@@ -10,7 +10,6 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const API_ERROR_NAMESPACES_1 = require("@/src/lib/constants/api/API_ERROR_NAMESPACES");
 const services_1 = require("@/src/lib/services/services");
 const parseUser_1 = require("@/src/lib/services/parser/parseUser");
-const parseSchedule_1 = require("@/src/lib/services/parser/parseSchedule");
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
@@ -52,7 +51,7 @@ app.post("/auth/login", async (req, res) => {
 });
 app.listen(constants_1.PORT, () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
-    (0, parseSchedule_1.parseSchedule)();
-    setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
+    // parseSchedule();
+    // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
 //# sourceMappingURL=app.js.map

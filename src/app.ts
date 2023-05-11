@@ -60,7 +60,6 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
-
-  parseSchedule();
-  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  // parseSchedule();
+  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
