@@ -35,7 +35,7 @@ const parseSchedule = async () => {
                 await page.waitForTimeout(2000);
             }
             await browser.close();
-            (0, services_1.createScheduleJSON)({ createdAt: new Date().getTime(), result });
+            (0, services_1.createScheduleJSON)({ createdAt: new Date().toString(), result });
             return;
         }
     }

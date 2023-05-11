@@ -57,7 +57,7 @@ export const parseSchedule = async () => {
       }
 
       await browser.close();
-      createScheduleJSON({ createdAt: new Date().getTime(), result });
+      createScheduleJSON({ createdAt: new Date().toString(), result });
 
       return;
     }

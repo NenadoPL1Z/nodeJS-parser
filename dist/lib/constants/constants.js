@@ -7,7 +7,7 @@ exports.SCHEDULE_UPDATE_INTERVAL = exports.ADMIN_PASSWORD = exports.ADMIN_LOGIN 
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.PORT = 3000;
-exports.ADMIN_LOGIN = process.env.ADMIN_LOGIN || "";
-exports.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+exports.ADMIN_LOGIN = process.env.ADMIN_LOGIN || "19200072";
+exports.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "7517984638";
 exports.SCHEDULE_UPDATE_INTERVAL = 600000;
 //# sourceMappingURL=constants.js.map
