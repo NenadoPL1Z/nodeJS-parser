@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
 
@@ -11,7 +11,10 @@ export const authUser: AuthUserFunction<
   Promise<BrowserModel | unknown>
 > = async (login, password) => {
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({
+      headless: false,
+      executablePath: puppeteer.executablePath("chrome"),
+    });
     const page = await browser.newPage();
 
     await page.goto(LOGIN_URL);

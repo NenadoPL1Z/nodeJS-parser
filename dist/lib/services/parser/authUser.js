@@ -4,14 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkAuthUser = exports.authUser = void 0;
-const puppeteer_1 = __importDefault(require("puppeteer"));
+const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
 const SEND_BUTTON_SELECTOR = "#loginbtn";
 const authUser = async (login, password) => {
     try {
-        const browser = await puppeteer_1.default.launch({ headless: false });
+        const browser = await puppeteer_core_1.default.launch({
+            headless: false,
+            executablePath: puppeteer_core_1.default.executablePath("chrome"),
+        });
         const page = await browser.newPage();
         await page.goto(LOGIN_URL);
         await page.setViewport({ width: 1920, height: 1080 });

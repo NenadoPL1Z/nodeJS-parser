@@ -9,8 +9,6 @@ import {
 import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
 import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
-import { parseSchedule } from "./lib/services/parser/parseSchedule";
-import path from "path";
 
 const app = express();
 
