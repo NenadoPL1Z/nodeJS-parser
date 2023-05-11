@@ -31,7 +31,8 @@ export const authUser: AuthUserFunction<
       page,
     };
   } catch (e) {
-    return e;
+    console.log(e);
+    throw e;
   }
 };
 

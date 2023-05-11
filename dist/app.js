@@ -10,7 +10,6 @@ const services_1 = require("./lib/services/services");
 const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
 const API_ERROR_NAMESPACES_1 = require("./lib/constants/api/API_ERROR_NAMESPACES");
-const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({
@@ -20,6 +19,12 @@ app.use(body_parser_1.default.json());
 app.use("/static", express_1.default.static("static"));
 app.get("/", async (req, res) => {
     res.json("Preco parser");
+});
+app.get("/static/test", async (req, res) => {
+    (0, services_1.returnJSON)(res, "test.json");
+});
+app.get("/static/schedule", async (req, res) => {
+    (0, services_1.returnJSON)(res, "schedule.json");
 });
 app.post("/api/auth/login", async (req, res) => {
     const sendSuccess = (0, services_1.sendSuccessResponse)(res);
@@ -47,17 +52,19 @@ app.post("/api/auth/login", async (req, res) => {
                     message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST,
                     data: e,
                 });
+                throw e;
             });
         }
         sendError(400, { message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_DATA, data: "" });
     }
     catch (e) {
         sendError(400, { message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST, data: e });
+        throw e;
     }
 });
 app.listen(constants_1.PORT, () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
-    (0, parseSchedule_1.parseSchedule)();
-    setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
+    // parseSchedule();
+    // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
 //# sourceMappingURL=app.js.map

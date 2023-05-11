@@ -63,5 +63,6 @@ export const parseSchedule = async () => {
     }
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };

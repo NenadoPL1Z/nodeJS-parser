@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import { LessonModel, ScheduleModel } from "../models/ScheduleModel";
 import { GropListArr } from "../../types/types";
+import path from "path";
 
 type SuccessArg = { key?: string; data: any };
 
@@ -18,6 +19,14 @@ export const sendErrorResponse = (res: express.Response) => {
     res.status(status);
     res.json({ error });
   };
+};
+
+export const returnJSON = (res: express.Response, jsonName: string) => {
+  const fileDirectory = path.resolve(__dirname, "../../../", "static/jsons");
+  res.sendFile(jsonName, { root: fileDirectory }, (err) => {
+    res.end();
+    if (err) throw err;
+  });
 };
 
 export const createScheduleJSON = (data: any) => {
@@ -47,6 +56,7 @@ export const getGroupListData = () => {
     return result;
   } catch (e) {
     return [] as GropListArr;
+    throw e;
   }
 };
 
@@ -112,5 +122,6 @@ export const getScheduleData = () => {
     return schedulesData;
   } catch (e) {
     return [];
+    throw e;
   }
 };

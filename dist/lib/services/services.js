@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getScheduleData = exports.getGroupListData = exports.createScheduleJSON = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
+exports.getScheduleData = exports.getGroupListData = exports.createScheduleJSON = exports.returnJSON = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
 const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const sendSuccessResponse = (res) => {
     return ({ key = "data", data }) => {
         res.status(200);
@@ -20,6 +21,15 @@ const sendErrorResponse = (res) => {
     };
 };
 exports.sendErrorResponse = sendErrorResponse;
+const returnJSON = (res, jsonName) => {
+    const fileDirectory = path_1.default.resolve(__dirname, "../../../", "static/jsons");
+    res.sendFile(jsonName, { root: fileDirectory }, (err) => {
+        res.end();
+        if (err)
+            throw err;
+    });
+};
+exports.returnJSON = returnJSON;
 const createScheduleJSON = (data) => {
     const json = JSON.stringify(data);
     fs_1.default.writeFile("static/jsons/schedule.json", json, "utf8", () => undefined);
@@ -41,6 +51,7 @@ const getGroupListData = () => {
     }
     catch (e) {
         return [];
+        throw e;
     }
 };
 exports.getGroupListData = getGroupListData;
@@ -86,6 +97,7 @@ const getScheduleData = () => {
     }
     catch (e) {
         return [];
+        throw e;
     }
 };
 exports.getScheduleData = getScheduleData;

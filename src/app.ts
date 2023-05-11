@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {
+  returnJSON,
   sendErrorResponse,
   sendSuccessResponse,
 } from "./lib/services/services";
@@ -9,6 +10,7 @@ import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
 import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
+import path from "path";
 
 const app = express();
 
@@ -25,6 +27,17 @@ app.use("/static", express.static("static"));
 app.get("/", async (req: express.Request, res: express.Response) => {
   res.json("Preco parser");
 });
+
+app.get("/static/test", async (req: express.Request, res: express.Response) => {
+  returnJSON(res, "test.json");
+});
+
+app.get(
+  "/static/schedule",
+  async (req: express.Request, res: express.Response) => {
+    returnJSON(res, "schedule.json");
+  },
+);
 
 app.post(
   "/api/auth/login",
@@ -56,17 +69,19 @@ app.post(
               message: API_ERROR_USER_AUTH.INVALID_REQUEST,
               data: e,
             });
+            throw e;
           });
       }
       sendError(400, { message: API_ERROR_USER_AUTH.INVALID_DATA, data: "" });
     } catch (e) {
       sendError(400, { message: API_ERROR_USER_AUTH.INVALID_REQUEST, data: e });
+      throw e;
     }
   },
 );
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
-  parseSchedule();
-  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  // parseSchedule();
+  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });

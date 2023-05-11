@@ -27,7 +27,8 @@ const authUser = async (login, password) => {
         };
     }
     catch (e) {
-        return e;
+        console.log(e);
+        throw e;
     }
 };
 exports.authUser = authUser;

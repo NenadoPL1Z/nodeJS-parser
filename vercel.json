@@ -10,18 +10,10 @@
       "src": "dist/app.js",
       "use": "@vercel/node",
       "config": { "includeFiles": ["dist/**"] }
-    },
-    {
-      "src": "static/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "dist/app.js" },
-    {
-      "src": "/(.*)",
-      "dest": "static/**"
-    }
+    { "src": "/(.*)", "dest": "dist/app.js" }
   ],
   "env": {
     "ADMIN_LOGIN": "QWE",
