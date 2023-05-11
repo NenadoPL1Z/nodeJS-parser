@@ -52,6 +52,7 @@ app.post("/auth/login", async (req, res) => {
 });
 app.listen(constants_1.PORT, () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
+    console.log(constants_1.ADMIN_LOGIN, constants_1.ADMIN_PASSWORD);
     (0, parseSchedule_1.parseSchedule)();
     setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });

@@ -16,7 +16,6 @@ const SEND_BUTTON_SELECTOR = "#id_submitbutton";
 
 export const parseSchedule = async () => {
   try {
-    console.log(ADMIN_LOGIN, ADMIN_PASSWORD);
     const authPage = (await authUser(
       ADMIN_LOGIN,
       ADMIN_PASSWORD,

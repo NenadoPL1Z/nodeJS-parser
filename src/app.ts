@@ -8,7 +8,12 @@ import {
   sendSuccessResponse,
 } from "./lib/services/services";
 import { parseUser } from "./lib/services/parser/parseUser";
-import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
+import {
+  ADMIN_LOGIN,
+  ADMIN_PASSWORD,
+  PORT,
+  SCHEDULE_UPDATE_INTERVAL,
+} from "./lib/constants/constants";
 import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 
@@ -60,6 +65,7 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
+  console.log(ADMIN_LOGIN, ADMIN_PASSWORD);
   parseSchedule();
   setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });

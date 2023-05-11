@@ -9,7 +9,6 @@ const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
 const parseSchedule = async () => {
     try {
-        console.log(constants_1.ADMIN_LOGIN, constants_1.ADMIN_PASSWORD);
         const authPage = (await (0, authUser_1.authUser)(constants_1.ADMIN_LOGIN, constants_1.ADMIN_PASSWORD));
         if ((0, authUser_1.checkAuthUser)(authPage)) {
             const { browser, page } = authPage;
