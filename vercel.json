@@ -3,7 +3,7 @@
   "name": "preco-parser",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "npm install --legacy-peer-deps --force",
   "outputDirectory": "dist",
   "builds": [
     {
