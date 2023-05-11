@@ -5,12 +5,14 @@
   "main": "src/app.ts",
   "scripts": {
     "dev": "nodemon src/app.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
     "format": "prettier --write src/",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint-fix": "eslint . --fix",
-    "types": "tsc --noEmit --skipLibCheck"
+    "types": "tsc --noEmit --skipLibCheck",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -36,9 +38,16 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsdom": "^21.1.1",
+    "pre-commit": "^1.2.2",
     "puppeteer": "^19.7.5",
+    "rimraf": "^5.0.0",
     "tsconfig-paths": "^4.1.2"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "nodemonConfig": {
     "ignore": [
       "**/*.test.ts",

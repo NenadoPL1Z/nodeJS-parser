@@ -6,10 +6,14 @@
   "installCommand": "npm install",
   "outputDirectory": "dist",
   "builds": [
-    { "src": "./dist/app.js", "use": "@vercel/node" }
+    {
+      "src": "dist/app.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["dist/**"] }
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "./dist/app.js" }
+    { "src": "/(.*)", "dest": "dist/app.js" }
   ],
   "env": {
     "ADMIN_LOGIN": "QWE",
