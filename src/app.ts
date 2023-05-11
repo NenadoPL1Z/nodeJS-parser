@@ -28,38 +28,41 @@ app.get("/", async (req: express.Request, res: express.Response) => {
   res.json("Preco parser");
 });
 
-app.post("/auth/login", async (req: express.Request, res: express.Response) => {
-  const sendSuccess = sendSuccessResponse(res);
-  const sendError = sendErrorResponse(res);
+app.post(
+  "/api/auth/login",
+  async (req: express.Request, res: express.Response) => {
+    const sendSuccess = sendSuccessResponse(res);
+    const sendError = sendErrorResponse(res);
 
-  try {
-    const { login, password } = req.body;
+    try {
+      const { login, password } = req.body;
 
-    if (login && password) {
-      return await parseUser(login, password)
-        .then((response) => {
-          if (typeof response === "string") {
-            return sendSuccess({
-              data: {
-                userName: response,
-                updatedAt: SCHEDULE_UPDATE_INTERVAL,
-              },
-            });
-          }
-          sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
-        })
-        .catch(() => {
-          sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
-        });
+      if (login && password) {
+        return await parseUser(login, password)
+          .then((response) => {
+            if (typeof response === "string") {
+              return sendSuccess({
+                data: {
+                  userName: response,
+                  updatedAt: SCHEDULE_UPDATE_INTERVAL,
+                },
+              });
+            }
+            sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
+          })
+          .catch(() => {
+            sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
+          });
+      }
+      sendError(400, API_ERROR_USER_AUTH.INVALID_DATA);
+    } catch (e) {
+      sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
     }
-    sendError(400, API_ERROR_USER_AUTH.INVALID_DATA);
-  } catch (e) {
-    sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
-  }
-});
+  },
+);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
-  // parseSchedule();
-  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  parseSchedule();
+  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
