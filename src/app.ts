@@ -48,15 +48,21 @@ app.post(
                 },
               });
             }
-            sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
+            sendError(400, {
+              message: API_ERROR_USER_AUTH.INVALID_REQUEST,
+              data: "",
+            });
           })
-          .catch(() => {
-            sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
+          .catch((e) => {
+            sendError(400, {
+              message: API_ERROR_USER_AUTH.INVALID_REQUEST,
+              data: e,
+            });
           });
       }
-      sendError(400, API_ERROR_USER_AUTH.INVALID_DATA);
+      sendError(400, { message: API_ERROR_USER_AUTH.INVALID_DATA, data: "" });
     } catch (e) {
-      sendError(400, API_ERROR_USER_AUTH.INVALID_REQUEST);
+      sendError(400, { message: API_ERROR_USER_AUTH.INVALID_REQUEST, data: e });
     }
   },
 );

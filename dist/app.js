@@ -38,16 +38,22 @@ app.post("/api/auth/login", async (req, res) => {
                         },
                     });
                 }
-                sendError(400, API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST);
+                sendError(400, {
+                    message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST,
+                    data: "",
+                });
             })
-                .catch(() => {
-                sendError(400, API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST);
+                .catch((e) => {
+                sendError(400, {
+                    message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST,
+                    data: e,
+                });
             });
         }
-        sendError(400, API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_DATA);
+        sendError(400, { message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_DATA, data: "" });
     }
     catch (e) {
-        sendError(400, API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST);
+        sendError(400, { message: API_ERROR_NAMESPACES_1.API_ERROR_USER_AUTH.INVALID_REQUEST, data: e });
     }
 });
 app.listen(constants_1.PORT, () => {

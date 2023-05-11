@@ -14,7 +14,7 @@ export const sendSuccessResponse = (res: express.Response) => {
 };
 
 export const sendErrorResponse = (res: express.Response) => {
-  return (status: number, error: string): void => {
+  return (status: number, error: { message: string; data: any }): void => {
     res.status(status);
     res.json({ error });
   };
