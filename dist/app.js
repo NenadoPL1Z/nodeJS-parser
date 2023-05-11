@@ -15,7 +15,7 @@ const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
 // Этапы исправления
 // 1 - Удалить в package.json объект engines
 // 2 - Обновить puppeteer-core до последней версии
-// 3 - Удалить any и настроить типизацию
+// 3 - Удалить any и настроить типизацию в файле authUser.ts
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({

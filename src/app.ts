@@ -15,7 +15,7 @@ import { parseSchedule } from "./lib/services/parser/parseSchedule";
 // Этапы исправления
 // 1 - Удалить в package.json объект engines
 // 2 - Обновить puppeteer-core до последней версии
-// 3 - Удалить any и настроить типизацию
+// 3 - Удалить any и настроить типизацию в файле authUser.ts
 
 const app = express();
 
