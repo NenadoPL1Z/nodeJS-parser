@@ -1,16 +1,16 @@
 import express from "express";
 import cors from "cors";
-import { PORT, SCHEDULE_UPDATE_INTERVAL } from "@/src/lib/constants/constants";
 import bodyParser from "body-parser";
-import { API_ERROR_USER_AUTH } from "@/src/lib/constants/api/API_ERROR_NAMESPACES";
+import path from "path";
 import {
   getStaticFolderPath,
   sendErrorResponse,
   sendSuccessResponse,
-} from "@/src/lib/services/services";
-import { parseUser } from "@/src/lib/services/parser/parseUser";
-import { parseSchedule } from "@/src/lib/services/parser/parseSchedule";
-import path from "path";
+} from "./lib/services/services";
+import { parseUser } from "./lib/services/parser/parseUser";
+import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
+import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
+import { parseSchedule } from "./lib/services/parser/parseSchedule";
 
 const app = express();
 
@@ -60,6 +60,6 @@ app.post("/auth/login", async (req: express.Request, res: express.Response) => {
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
-  // parseSchedule();
-  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  parseSchedule();
+  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });

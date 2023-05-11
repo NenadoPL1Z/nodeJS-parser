@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUser = void 0;
-const authUser_1 = require("@/src/lib/services/parser/authUser");
-const API_ERROR_NAMESPACES_1 = require("@/src/lib/constants/api/API_ERROR_NAMESPACES");
+const authUser_1 = require("./authUser");
+const API_ERROR_NAMESPACES_1 = require("../../constants/api/API_ERROR_NAMESPACES");
 const PSEUDONYM_SELECTOR = "#page-header > div > div:last-child > h2";
 const parseUser = async (login, password) => {
     try {

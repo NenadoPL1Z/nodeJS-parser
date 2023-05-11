@@ -5,12 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const constants_1 = require("@/src/lib/constants/constants");
 const body_parser_1 = __importDefault(require("body-parser"));
-const API_ERROR_NAMESPACES_1 = require("@/src/lib/constants/api/API_ERROR_NAMESPACES");
-const services_1 = require("@/src/lib/services/services");
-const parseUser_1 = require("@/src/lib/services/parser/parseUser");
 const path_1 = __importDefault(require("path"));
+const services_1 = require("./lib/services/services");
+const parseUser_1 = require("./lib/services/parser/parseUser");
+const constants_1 = require("./lib/constants/constants");
+const API_ERROR_NAMESPACES_1 = require("./lib/constants/api/API_ERROR_NAMESPACES");
+const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({
@@ -51,7 +52,7 @@ app.post("/auth/login", async (req, res) => {
 });
 app.listen(constants_1.PORT, () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
-    // parseSchedule();
-    // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+    (0, parseSchedule_1.parseSchedule)();
+    setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });
 //# sourceMappingURL=app.js.map

@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
-import { AuthUserFunction } from "@/src/types/types";
-import { BrowserModel } from "@/src/lib/models/BrowserModel";
+import { AuthUserFunction } from "../../../types/types";
+import { BrowserModel } from "../../models/BrowserModel";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";

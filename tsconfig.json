@@ -8,12 +8,6 @@
     "strict": true,
     "esModuleInterop": true,
     "rootDir": "src",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "*"
-      ]
-    }
   },
   "include": ["src/**/*"]
 }

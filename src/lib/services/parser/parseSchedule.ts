@@ -1,12 +1,12 @@
-import { authUser, checkAuthUser } from "@/src/lib/services/parser/authUser";
-import { ADMIN_LOGIN, ADMIN_PASSWORD } from "@/src/lib/constants/constants";
-import { BrowserModel } from "@/src/lib/models/BrowserModel";
+import { authUser, checkAuthUser } from "./authUser";
+import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../constants/constants";
+import { BrowserModel } from "../../models/BrowserModel";
+import { GroupSchedulesModel } from "../../models/ScheduleModel";
 import {
   createScheduleJSON,
   getGroupListData,
   getScheduleData,
-} from "@/src/lib/services/services";
-import { GroupSchedulesModel } from "@/src/lib/models/ScheduleModel";
+} from "../services";
 
 const SCHEDULE_URL =
   "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.php";

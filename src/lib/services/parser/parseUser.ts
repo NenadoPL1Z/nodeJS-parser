@@ -1,6 +1,6 @@
-import { authUser, checkAuthUser } from "@/src/lib/services/parser/authUser";
-import { BrowserModel } from "@/src/lib/models/BrowserModel";
-import { API_ERROR_USER_AUTH } from "@/src/lib/constants/api/API_ERROR_NAMESPACES";
+import { authUser, checkAuthUser } from "./authUser";
+import { BrowserModel } from "../../models/BrowserModel";
+import { API_ERROR_USER_AUTH } from "../../constants/api/API_ERROR_NAMESPACES";
 
 const PSEUDONYM_SELECTOR = "#page-header > div > div:last-child > h2";
 

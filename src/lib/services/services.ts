@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
-import { GropListArr } from "@/src/types/types";
-import { LessonModel, ScheduleModel } from "@/src/lib/models/ScheduleModel";
+import { LessonModel, ScheduleModel } from "../models/ScheduleModel";
+import { GropListArr } from "../../types/types";
 
 type SuccessArg = { key?: string; data: any };
 

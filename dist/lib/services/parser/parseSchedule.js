@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseSchedule = void 0;
-const authUser_1 = require("@/src/lib/services/parser/authUser");
-const constants_1 = require("@/src/lib/constants/constants");
-const services_1 = require("@/src/lib/services/services");
+const authUser_1 = require("./authUser");
+const constants_1 = require("../../constants/constants");
+const services_1 = require("../services");
 const SCHEDULE_URL = "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.php";
 const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
