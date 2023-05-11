@@ -20,7 +20,7 @@
     { "src": "/(.*)", "dest": "dist/app.js" },
     {
       "src": "/(.*)",
-      "dest": "static/jsons/*"
+      "dest": "static/**"
     }
   ],
   "env": {
