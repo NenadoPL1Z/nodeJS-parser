@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getScheduleData = exports.getGroupListData = exports.createScheduleJSON = exports.getStaticFolderPath = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
+exports.getScheduleData = exports.getGroupListData = exports.createScheduleJSON = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
 const fs_1 = __importDefault(require("fs"));
 const sendSuccessResponse = (res) => {
     return ({ key = "data", data }) => {
@@ -20,12 +20,6 @@ const sendErrorResponse = (res) => {
     };
 };
 exports.sendErrorResponse = sendErrorResponse;
-const getStaticFolderPath = () => {
-    const nestedFolderCount = 3;
-    const dirArr = __dirname.split("/");
-    return dirArr.slice(0, dirArr.length - nestedFolderCount).join("/");
-};
-exports.getStaticFolderPath = getStaticFolderPath;
 const createScheduleJSON = (data) => {
     const json = JSON.stringify(data);
     fs_1.default.writeFile("static/jsons/schedule.json", json, "utf8", () => undefined);

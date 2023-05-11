@@ -1,9 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import path from "path";
 import {
-  getStaticFolderPath,
   sendErrorResponse,
   sendSuccessResponse,
 } from "./lib/services/services";
@@ -22,7 +20,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(getStaticFolderPath(), "static")));
+app.use("/static", express.static("static"));
 
 app.get("/", async (req: express.Request, res: express.Response) => {
   res.json("Preco parser");

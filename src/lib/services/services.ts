@@ -20,13 +20,6 @@ export const sendErrorResponse = (res: express.Response) => {
   };
 };
 
-export const getStaticFolderPath = () => {
-  const nestedFolderCount = 3;
-  const dirArr = __dirname.split("/");
-
-  return dirArr.slice(0, dirArr.length - nestedFolderCount).join("/");
-};
-
 export const createScheduleJSON = (data: any) => {
   const json = JSON.stringify(data);
   fs.writeFile("static/jsons/schedule.json", json, "utf8", () => undefined);

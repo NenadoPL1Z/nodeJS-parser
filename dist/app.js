@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const path_1 = __importDefault(require("path"));
 const services_1 = require("./lib/services/services");
 const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
@@ -18,7 +17,7 @@ app.use(body_parser_1.default.urlencoded({
     extended: true,
 }));
 app.use(body_parser_1.default.json());
-app.use(express_1.default.static(path_1.default.join((0, services_1.getStaticFolderPath)(), "static")));
+app.use("/static", express_1.default.static("static"));
 app.get("/", async (req, res) => {
     res.json("Preco parser");
 });
