@@ -104,6 +104,6 @@ app.post(
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
-  parseSchedule();
-  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  // parseSchedule();
+  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
