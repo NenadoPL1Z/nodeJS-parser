@@ -19,7 +19,9 @@ export const authUser: AuthUserFunction<
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       executablePath:
-        (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
+        "/opt/render/project/src/node_modules/puppeteer-core/.local-chromium/linux-884014",
+      // executablePath:
+      //   (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
       ignoreHTTPSErrors: true,
       headless: false,
     });

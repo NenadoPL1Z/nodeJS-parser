@@ -16,7 +16,9 @@ const authUser = async (login, password) => {
         const browser = await puppeteer_core_1.default.launch({
             args: chrome_aws_lambda_1.default.args,
             defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
-            executablePath: (await chrome_aws_lambda_1.default.executablePath) || LOCAL_CHROME_EXECUTABLE,
+            executablePath: "/opt/render/project/src/node_modules/puppeteer-core/.local-chromium/linux-884014",
+            // executablePath:
+            //   (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
             ignoreHTTPSErrors: true,
             headless: false,
         });
