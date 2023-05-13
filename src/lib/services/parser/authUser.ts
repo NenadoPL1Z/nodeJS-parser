@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
+import { IS_PROD } from "../../constants/constants";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
@@ -12,18 +13,17 @@ export const authUser: AuthUserFunction<
 > = async (login, password) => {
   try {
     const browser = await puppeteer.launch({
+      headless: false,
+      ignoreHTTPSErrors: true,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--single-process",
         "--no-zygote",
       ],
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
-      ignoreHTTPSErrors: true,
-      headless: false,
+      executablePath: IS_PROD
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
     });
 
     const page = await browser.newPage();

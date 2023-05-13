@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkAuthUser = exports.authUser = void 0;
 const puppeteer_1 = __importDefault(require("puppeteer"));
+const constants_1 = require("../../constants/constants");
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
@@ -12,17 +13,17 @@ const SEND_BUTTON_SELECTOR = "#loginbtn";
 const authUser = async (login, password) => {
     try {
         const browser = await puppeteer_1.default.launch({
+            headless: false,
+            ignoreHTTPSErrors: true,
             args: [
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
                 "--single-process",
                 "--no-zygote",
             ],
-            executablePath: process.env.NODE_ENV === "production"
+            executablePath: constants_1.IS_PROD
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer_1.default.executablePath(),
-            ignoreHTTPSErrors: true,
-            headless: false,
         });
         const page = await browser.newPage();
         await page.goto(LOGIN_URL);
