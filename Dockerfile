@@ -6,6 +6,5 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 RUN npm ci
-RUN apt-get install chromium-browser
 COPY . .
 CMD [ "node", "dist/app.js" ]

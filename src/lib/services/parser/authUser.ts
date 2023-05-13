@@ -21,6 +21,7 @@ export const authUser: AuthUserFunction<
         "--single-process",
         "--no-zygote",
       ],
+      ignoreDefaultArgs: ["--disable-extensions"],
       executablePath: IS_PROD
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),

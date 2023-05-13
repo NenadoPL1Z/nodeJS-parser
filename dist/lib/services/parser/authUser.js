@@ -21,6 +21,7 @@ const authUser = async (login, password) => {
                 "--single-process",
                 "--no-zygote",
             ],
+            ignoreDefaultArgs: ["--disable-extensions"],
             executablePath: constants_1.IS_PROD
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer_1.default.executablePath(),
