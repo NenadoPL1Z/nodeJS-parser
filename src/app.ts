@@ -45,7 +45,13 @@ app.get(
   "/api/create/static/test",
   async (req: express.Request, res: express.Response) => {
     try {
-      const json = JSON.stringify({ createdAt: new Date() });
+      const date = new Date();
+      const json = JSON.stringify({
+        createdAt: date,
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds(),
+      });
       fs.writeFile("static/jsons/test.json", json, "utf8", () => undefined);
       res.json("success");
     } catch (e) {

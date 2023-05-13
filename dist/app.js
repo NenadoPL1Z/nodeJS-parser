@@ -31,7 +31,13 @@ app.get("/static/schedule", async (req, res) => {
 });
 app.get("/api/create/static/test", async (req, res) => {
     try {
-        const json = JSON.stringify({ createdAt: new Date() });
+        const date = new Date();
+        const json = JSON.stringify({
+            createdAt: date,
+            hours: date.getHours(),
+            minutes: date.getMinutes(),
+            seconds: date.getSeconds(),
+        });
         fs_1.default.writeFile("static/jsons/test.json", json, "utf8", () => undefined);
         res.json("success");
     }
