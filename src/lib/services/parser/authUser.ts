@@ -15,7 +15,6 @@ export const authUser: AuthUserFunction<
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
       ignoreHTTPSErrors: true,
       headless: false,
     });
