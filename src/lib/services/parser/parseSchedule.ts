@@ -36,7 +36,6 @@ export const parseSchedule = async () => {
       await page.waitForSelector(SEND_BUTTON_SELECTOR);
 
       const groupListData = await page.evaluate(getGroupListData);
-
       counts.max = groupListData.length;
 
       for (let i = 0; i < groupListData.length; i++) {
@@ -45,11 +44,9 @@ export const parseSchedule = async () => {
         await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
         await page.click(SEND_BUTTON_SELECTOR);
 
-        await page.waitForNavigation({
+        await page.waitForFunction(() => document.readyState === "complete", {
           timeout: 120000,
-          waitUntil: ["networkidle2"],
         });
-        await page.waitForFunction(() => document.readyState === "complete");
 
         const groupScheduleData = await page.evaluate(getScheduleData);
 
@@ -71,6 +68,4 @@ export const parseSchedule = async () => {
     createScheduleJSON({ createdAt: new Date().toString(), result });
     throw e;
   }
-
-  console.log(counts);
 };

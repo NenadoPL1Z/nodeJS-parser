@@ -26,11 +26,9 @@ const parseSchedule = async () => {
                 const currentGroup = groupListData[i];
                 await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
                 await page.click(SEND_BUTTON_SELECTOR);
-                await page.waitForNavigation({
+                await page.waitForFunction(() => document.readyState === "complete", {
                     timeout: 120000,
-                    waitUntil: ["networkidle2"],
                 });
-                await page.waitForFunction(() => document.readyState === "complete");
                 const groupScheduleData = await page.evaluate(services_1.getScheduleData);
                 result.push({
                     name: currentGroup.text,
@@ -49,7 +47,6 @@ const parseSchedule = async () => {
         (0, services_1.createScheduleJSON)({ createdAt: new Date().toString(), result });
         throw e;
     }
-    console.log(counts);
 };
 exports.parseSchedule = parseSchedule;
 //# sourceMappingURL=parseSchedule.js.map

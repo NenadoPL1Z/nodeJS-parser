@@ -1,5 +1,4 @@
-import puppeteer from "puppeteer-core";
-import chromium from "chrome-aws-lambda";
+import puppeteer from "puppeteer";
 import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
 
@@ -8,23 +7,21 @@ const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
 const SEND_BUTTON_SELECTOR = "#loginbtn";
 
-const LOCAL_CHROME_EXECUTABLE =
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-
 export const authUser: AuthUserFunction<
   Promise<BrowserModel | unknown>
 > = async (login, password) => {
   try {
     const browser = await puppeteer.launch({
       args: [
-        ...chromium.args,
         "--no-sandbox",
         "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
+        "--single-process",
+        "--no-zygote",
       ],
-      defaultViewport: chromium.defaultViewport,
       executablePath:
-        (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
       ignoreHTTPSErrors: true,
       headless: false,
     });
