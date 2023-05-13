@@ -18,8 +18,6 @@ export const authUser: AuthUserFunction<
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath:
-        "/opt/render/project/src/node_modules/puppeteer-core/.local-chromium/linux-884014",
       // executablePath:
       //   (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
       ignoreHTTPSErrors: true,
