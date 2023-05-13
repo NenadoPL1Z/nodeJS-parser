@@ -29,7 +29,6 @@ app.get("/", async (req: express.Request, res: express.Response) => {
 });
 
 app.get("/static/test", async (req: express.Request, res: express.Response) => {
-  console.log(123);
   returnJSON(res, "test.json");
 });
 

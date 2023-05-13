@@ -23,7 +23,6 @@ app.get("/", async (req, res) => {
     res.json("Preco parser");
 });
 app.get("/static/test", async (req, res) => {
-    console.log(123);
     (0, services_1.returnJSON)(res, "test.json");
 });
 app.get("/static/schedule", async (req, res) => {
