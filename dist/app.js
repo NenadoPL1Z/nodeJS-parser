@@ -11,6 +11,7 @@ const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
 const API_ERROR_NAMESPACES_1 = require("./lib/constants/api/API_ERROR_NAMESPACES");
 const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
+const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({
@@ -27,6 +28,17 @@ app.get("/static/test", async (req, res) => {
 });
 app.get("/static/schedule", async (req, res) => {
     (0, services_1.returnJSON)(res, "schedule.json");
+});
+app.get("/api/create/static/test", async (req, res) => {
+    try {
+        const json = JSON.stringify({ createdAt: new Date() });
+        fs_1.default.writeFile("static/jsons/test.json", json, "utf8", () => undefined);
+        res.json("success");
+    }
+    catch (e) {
+        res.status(400);
+        res.json(e);
+    }
 });
 app.post("/api/auth/login", async (req, res) => {
     const sendSuccess = (0, services_1.sendSuccessResponse)(res);

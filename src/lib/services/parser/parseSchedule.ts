@@ -60,6 +60,7 @@ export const parseSchedule = async () => {
         });
 
         counts.current += 1;
+        console.log(counts);
       }
 
       await browser.close();

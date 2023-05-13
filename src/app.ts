@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {
+  createScheduleJSON,
   returnJSON,
   sendErrorResponse,
   sendSuccessResponse,
@@ -10,6 +11,7 @@ import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
 import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
+import fs from "fs";
 
 const app = express();
 
@@ -36,6 +38,20 @@ app.get(
   "/static/schedule",
   async (req: express.Request, res: express.Response) => {
     returnJSON(res, "schedule.json");
+  },
+);
+
+app.get(
+  "/api/create/static/test",
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const json = JSON.stringify({ createdAt: new Date() });
+      fs.writeFile("static/jsons/test.json", json, "utf8", () => undefined);
+      res.json("success");
+    } catch (e) {
+      res.status(400);
+      res.json(e);
+    }
   },
 );
 

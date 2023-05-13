@@ -38,6 +38,7 @@ const parseSchedule = async () => {
                     schedules: groupScheduleData,
                 });
                 counts.current += 1;
+                console.log(counts);
             }
             await browser.close();
             (0, services_1.createScheduleJSON)({ createdAt: new Date().toString(), result });
