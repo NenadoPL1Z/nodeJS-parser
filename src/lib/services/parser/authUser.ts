@@ -8,16 +8,20 @@ const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
 const SEND_BUTTON_SELECTOR = "#loginbtn";
 
+const LOCAL_CHROME_EXECUTABLE =
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+
 export const authUser: AuthUserFunction<
   Promise<BrowserModel | unknown>
 > = async (login, password) => {
   try {
     const browser = await puppeteer.launch({
-      args: [...chromium.args, "--no-sandbox", "--disabled-setupid-sandbox"],
+      args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      executablePath:
+        (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
       ignoreHTTPSErrors: true,
-      headless: true,
+      headless: false,
     });
 
     const page = await browser.newPage();
