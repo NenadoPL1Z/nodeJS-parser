@@ -10,13 +10,12 @@ const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
 const SEND_BUTTON_SELECTOR = "#loginbtn";
-const LOCAL_CHROME_EXECUTABLE = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const authUser = async (login, password) => {
     try {
         const browser = await puppeteer_core_1.default.launch({
             args: chrome_aws_lambda_1.default.args,
             defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
-            executablePath: (await chrome_aws_lambda_1.default.executablePath) || LOCAL_CHROME_EXECUTABLE,
+            executablePath: await chrome_aws_lambda_1.default.executablePath,
             ignoreHTTPSErrors: true,
             headless: false,
         });

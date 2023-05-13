@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 import { LessonModel, ScheduleModel } from "../models/ScheduleModel";
-import { GropListArr } from "../../types/types";
+import { GroupListArr } from "../../types/types";
 import path from "path";
 
 type SuccessArg = { key?: string; data: any };
@@ -36,7 +36,7 @@ export const createScheduleJSON = (data: any) => {
 
 export const getGroupListData = () => {
   try {
-    const result: GropListArr = [];
+    const result: GroupListArr = [];
 
     const innerSelectElement = document.querySelector(
       "#id_listgroups",
@@ -55,7 +55,7 @@ export const getGroupListData = () => {
 
     return result;
   } catch (e) {
-    return [] as GropListArr;
+    return [] as GroupListArr;
     throw e;
   }
 };
