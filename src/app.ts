@@ -46,14 +46,16 @@ app.get(
   async (req: express.Request, res: express.Response) => {
     try {
       const date = new Date();
-      const json = JSON.stringify({
+      const data = {
         createdAt: date,
         hours: date.getHours(),
         minutes: date.getMinutes(),
         seconds: date.getSeconds(),
-      });
+      };
+
+      const json = JSON.stringify(data);
       fs.writeFile("static/jsons/test.json", json, "utf8", () => undefined);
-      res.json("success");
+      res.json(data);
     } catch (e) {
       res.status(400);
       res.json(e);
