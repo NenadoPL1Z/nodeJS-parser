@@ -13,7 +13,7 @@ export const authUser: AuthUserFunction<
 > = async (login, password) => {
   try {
     const browser = await puppeteer.launch({
-      args: chromium.args,
+      args: [...chromium.args, "--no-sandbox", "--disabled-setupid-sandbox"],
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
       ignoreHTTPSErrors: true,

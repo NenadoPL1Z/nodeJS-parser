@@ -13,7 +13,7 @@ const SEND_BUTTON_SELECTOR = "#loginbtn";
 const authUser = async (login, password) => {
     try {
         const browser = await puppeteer_core_1.default.launch({
-            args: chrome_aws_lambda_1.default.args,
+            args: [...chrome_aws_lambda_1.default.args, "--no-sandbox", "--disabled-setupid-sandbox"],
             defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
             executablePath: await chrome_aws_lambda_1.default.executablePath,
             ignoreHTTPSErrors: true,
