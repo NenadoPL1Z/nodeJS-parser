@@ -8,6 +8,11 @@ const SCHEDULE_URL = "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.ph
 const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
 const parseSchedule = async () => {
+    const result = [];
+    const counts = {
+        current: 0,
+        max: 0,
+    };
     try {
         const authPage = (await (0, authUser_1.authUser)(constants_1.ADMIN_LOGIN, constants_1.ADMIN_PASSWORD));
         if ((0, authUser_1.checkAuthUser)(authPage)) {
@@ -16,14 +21,14 @@ const parseSchedule = async () => {
             await page.waitForSelector(GROUPS_LIST_SELECTOR);
             await page.waitForSelector(SEND_BUTTON_SELECTOR);
             const groupListData = await page.evaluate(services_1.getGroupListData);
-            const result = [];
+            counts.max = groupListData.length;
             for (let i = 0; i < groupListData.length; i++) {
                 const currentGroup = groupListData[i];
                 await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
                 await page.click(SEND_BUTTON_SELECTOR);
                 await page.waitForNavigation({
                     timeout: 120000,
-                    waitUntil: ["load", "networkidle2"],
+                    waitUntil: ["networkidle2"],
                 });
                 await page.waitForFunction(() => document.readyState === "complete");
                 const groupScheduleData = await page.evaluate(services_1.getScheduleData);
@@ -32,7 +37,7 @@ const parseSchedule = async () => {
                     value: currentGroup.value,
                     schedules: groupScheduleData,
                 });
-                await page.waitForTimeout(2000);
+                counts.current += 1;
             }
             await browser.close();
             (0, services_1.createScheduleJSON)({ createdAt: new Date().toString(), result });
@@ -40,9 +45,10 @@ const parseSchedule = async () => {
         }
     }
     catch (e) {
-        console.log(e);
+        (0, services_1.createScheduleJSON)({ createdAt: new Date().toString(), result });
         throw e;
     }
+    console.log(counts);
 };
 exports.parseSchedule = parseSchedule;
 //# sourceMappingURL=parseSchedule.js.map

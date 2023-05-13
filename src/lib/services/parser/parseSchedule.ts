@@ -15,6 +15,12 @@ const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
 
 export const parseSchedule = async () => {
+  const result: GroupSchedulesModel[] = [];
+  const counts = {
+    current: 0,
+    max: 0,
+  };
+
   try {
     const authPage = (await authUser(
       ADMIN_LOGIN,
@@ -31,7 +37,7 @@ export const parseSchedule = async () => {
 
       const groupListData = await page.evaluate(getGroupListData);
 
-      const result: GroupSchedulesModel[] = [];
+      counts.max = groupListData.length;
 
       for (let i = 0; i < groupListData.length; i++) {
         const currentGroup = groupListData[i];
@@ -41,7 +47,7 @@ export const parseSchedule = async () => {
 
         await page.waitForNavigation({
           timeout: 120000,
-          waitUntil: ["load", "networkidle2"],
+          waitUntil: ["networkidle2"],
         });
         await page.waitForFunction(() => document.readyState === "complete");
 
@@ -53,16 +59,17 @@ export const parseSchedule = async () => {
           schedules: groupScheduleData,
         });
 
-        await page.waitForTimeout(2000);
+        counts.current += 1;
       }
 
       await browser.close();
       createScheduleJSON({ createdAt: new Date().toString(), result });
-
       return;
     }
   } catch (e) {
-    console.log(e);
+    createScheduleJSON({ createdAt: new Date().toString(), result });
     throw e;
   }
+
+  console.log(counts);
 };
