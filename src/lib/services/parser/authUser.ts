@@ -17,7 +17,7 @@ export const authUser: AuthUserFunction<
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
       ignoreHTTPSErrors: true,
-      headless: false,
+      headless: true,
     });
 
     const page = await browser.newPage();

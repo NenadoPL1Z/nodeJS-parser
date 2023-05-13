@@ -17,7 +17,7 @@ const authUser = async (login, password) => {
             defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
             executablePath: await chrome_aws_lambda_1.default.executablePath,
             ignoreHTTPSErrors: true,
-            headless: false,
+            headless: true,
         });
         const page = await browser.newPage();
         await page.goto(LOGIN_URL);
