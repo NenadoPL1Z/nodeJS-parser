@@ -13,8 +13,7 @@ export const authUser: AuthUserFunction<
 > = async (login, password) => {
   try {
     const browser = await puppeteer.launch({
-      headless: false,
-      ignoreHTTPSErrors: true,
+      headless: IS_PROD,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",

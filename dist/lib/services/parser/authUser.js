@@ -13,8 +13,7 @@ const SEND_BUTTON_SELECTOR = "#loginbtn";
 const authUser = async (login, password) => {
     try {
         const browser = await puppeteer_1.default.launch({
-            headless: false,
-            ignoreHTTPSErrors: true,
+            headless: constants_1.IS_PROD,
             args: [
                 "--no-sandbox",
                 "--disable-setuid-sandbox",

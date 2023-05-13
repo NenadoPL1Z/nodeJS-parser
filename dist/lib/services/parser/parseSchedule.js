@@ -44,7 +44,7 @@ const parseSchedule = async () => {
         }
     }
     catch (e) {
-        (0, services_1.createScheduleJSON)({ createdAt: new Date().toString(), result });
+        console.log(e);
         throw e;
     }
 };

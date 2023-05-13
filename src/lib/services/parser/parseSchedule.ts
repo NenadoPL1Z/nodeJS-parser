@@ -65,7 +65,7 @@ export const parseSchedule = async () => {
       return;
     }
   } catch (e) {
-    createScheduleJSON({ createdAt: new Date().toString(), result });
+    console.log(e);
     throw e;
   }
 };
