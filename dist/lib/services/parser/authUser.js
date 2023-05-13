@@ -14,10 +14,14 @@ const LOCAL_CHROME_EXECUTABLE = "/Applications/Google Chrome.app/Contents/MacOS/
 const authUser = async (login, password) => {
     try {
         const browser = await puppeteer_core_1.default.launch({
-            args: chrome_aws_lambda_1.default.args,
+            args: [
+                ...chrome_aws_lambda_1.default.args,
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+            ],
             defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
-            // executablePath:
-            //   (await chromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
+            executablePath: (await chrome_aws_lambda_1.default.executablePath) || LOCAL_CHROME_EXECUTABLE,
             ignoreHTTPSErrors: true,
             headless: false,
         });
