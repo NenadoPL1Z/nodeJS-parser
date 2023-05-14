@@ -9,6 +9,12 @@ import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
 import { getSchedule } from "./lib/services/api/getSchedule";
 import { getUser } from "./lib/services/api/getUser";
 
+let secondStart = 0;
+setInterval(() => {
+  secondStart += 1;
+  console.log(secondStart);
+}, 1000);
+
 const app = express();
 
 export const sequelize = new Sequelize(
