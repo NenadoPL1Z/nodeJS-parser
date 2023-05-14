@@ -49,6 +49,11 @@ app.get("/", getResIndexRoute);
 app.get("/api/schedule", getSchedule);
 app.post("/api/auth/login", getUser);
 
+app.post("/api/create/schedule", async (req, res) => {
+  const result = await parseSchedule();
+  res.json(JSON.stringify(result));
+});
+
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 

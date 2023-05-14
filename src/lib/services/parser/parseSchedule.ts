@@ -58,10 +58,12 @@ export const parseSchedule = async () => {
       }
 
       await browser.close();
-      await setScheduleDB(JSON.stringify(result));
 
-      console.log("success save");
-      return;
+      if (result) {
+        await setScheduleDB(JSON.stringify(result));
+      }
+
+      return result;
     }
   } catch (e) {
     console.log(e);

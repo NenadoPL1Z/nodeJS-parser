@@ -119,6 +119,6 @@ export const setScheduleDB = async (result: string) => {
     ruUpdateTime: new Date().toString(),
     result,
   });
-
   await schedule.save();
+  console.log("success save");
 };
