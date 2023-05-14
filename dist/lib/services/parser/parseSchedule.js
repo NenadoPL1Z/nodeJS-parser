@@ -27,7 +27,7 @@ const parseSchedule = async () => {
                 await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
                 await page.click(SEND_BUTTON_SELECTOR);
                 await page.waitForFunction(() => document.readyState === "complete", {
-                    timeout: 120000,
+                    timeout: 240000,
                 });
                 const groupScheduleData = await page.evaluate(services_1.getScheduleData);
                 result.push({
