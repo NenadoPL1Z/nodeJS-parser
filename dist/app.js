@@ -13,15 +13,14 @@ const constants_1 = require("./lib/constants/constants");
 const API_ERROR_NAMESPACES_1 = require("./lib/constants/api/API_ERROR_NAMESPACES");
 const sequelize_1 = require("sequelize");
 const app = (0, express_1.default)();
-exports.sequelize = {} ||
-    new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
-        dialect: "postgres",
-        protocol: "postgres",
-        dialectOptions: {
-            ssl: true,
-            native: true,
-        },
-    });
+exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+        ssl: true,
+        native: true,
+    },
+});
 exports.ScheduleModel = {} ||
     exports.sequelize.define("Schedule", {
         id: { type: sequelize_1.DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
