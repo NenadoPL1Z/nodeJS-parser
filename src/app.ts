@@ -15,11 +15,9 @@ export const sequelize = new Sequelize(
   "postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco",
   {
     dialect: "postgres",
-    protocol: "postgres",
     dialectModule: pg,
     dialectOptions: {
       ssl: true,
-      native: true,
     },
   },
 );
