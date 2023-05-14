@@ -1,4 +1,5 @@
 import express from "express";
+import pg from "pg";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
@@ -15,6 +16,7 @@ export const sequelize = new Sequelize(
   {
     dialect: "postgres",
     protocol: "postgres",
+    dialectModule: pg,
     dialectOptions: {
       ssl: true,
       native: true,
