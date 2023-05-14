@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUser = void 0;
 const authUser_1 = require("./authUser");
-const API_ERROR_1 = require("../../constants/API_ERROR");
+const constants_1 = require("../../constants/constants");
 const PSEUDONYM_SELECTOR = "#page-header > div > div:last-child > h2";
 const parseUser = async (login, password) => {
     try {
@@ -15,7 +15,7 @@ const parseUser = async (login, password) => {
             await browser.close();
             return pseudonym.trim();
         }
-        new Error(API_ERROR_1.API_ERROR.INVALID_REQUEST);
+        new Error(constants_1.API_ERROR.INVALID_REQUEST);
     }
     catch (e) {
         return e;

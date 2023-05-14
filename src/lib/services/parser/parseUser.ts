@@ -1,6 +1,6 @@
 import { authUser, checkAuthUser } from "./authUser";
 import { BrowserModel } from "../../models/BrowserModel";
-import { API_ERROR } from "../../constants/API_ERROR";
+import { API_ERROR } from "../../constants/constants";
 
 const PSEUDONYM_SELECTOR = "#page-header > div > div:last-child > h2";
 

@@ -1,6 +1,5 @@
 import puppeteer from "puppeteer-core";
 import edgeChromium from "chrome-aws-lambda";
-
 import { BrowserModel } from "../../models/BrowserModel";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";

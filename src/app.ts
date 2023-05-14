@@ -8,7 +8,7 @@ import {
 } from "./lib/services/services";
 import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
-import { API_ERROR } from "./lib/constants/API_ERROR";
+import { API_ERROR } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { PrismaClient } from "@prisma/client";
 

@@ -10,7 +10,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const services_1 = require("./lib/services/services");
 const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
-const API_ERROR_1 = require("./lib/constants/API_ERROR");
+const constants_2 = require("./lib/constants/constants");
 const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
 const client_1 = require("@prisma/client");
 const app = (0, express_1.default)();
@@ -48,22 +48,22 @@ app.post("/api/auth/login", async (req, res) => {
                     });
                 }
                 sendError(400, {
-                    message: API_ERROR_1.API_ERROR.INVALID_REQUEST,
+                    message: constants_2.API_ERROR.INVALID_REQUEST,
                     data: "",
                 });
             })
                 .catch((e) => {
                 sendError(400, {
-                    message: API_ERROR_1.API_ERROR.INVALID_REQUEST,
+                    message: constants_2.API_ERROR.INVALID_REQUEST,
                     data: e,
                 });
                 throw e;
             });
         }
-        sendError(400, { message: API_ERROR_1.API_ERROR.INVALID_DATA, data: "" });
+        sendError(400, { message: constants_2.API_ERROR.INVALID_DATA, data: "" });
     }
     catch (e) {
-        sendError(400, { message: API_ERROR_1.API_ERROR.INVALID_REQUEST, data: e });
+        sendError(400, { message: constants_2.API_ERROR.INVALID_REQUEST, data: e });
         throw e;
     }
 });
