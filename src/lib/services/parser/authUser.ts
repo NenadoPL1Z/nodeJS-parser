@@ -1,4 +1,6 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import edgeChromium from "chrome-aws-lambda";
+
 import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
 import { IS_PROD } from "../../constants/constants";
@@ -7,6 +9,9 @@ const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
 const PASSWORD_INPUT_SELECTOR = "#password";
 const SEND_BUTTON_SELECTOR = "#loginbtn";
+
+const LOCAL_CHROME_EXECUTABLE =
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 export const authUser: AuthUserFunction<
   Promise<BrowserModel | unknown>
@@ -18,6 +23,7 @@ export const authUser: AuthUserFunction<
       defaultViewport: { width: 1920, height: 1080 },
       ignoreDefaultArgs: ["--disable-extensions"],
       args: [
+        ...edgeChromium.args,
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--single-process",
@@ -25,9 +31,8 @@ export const authUser: AuthUserFunction<
         "--hide-scrollbars",
         "--disable-web-security",
       ],
-      executablePath: IS_PROD
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
+      executablePath:
+        (await edgeChromium.executablePath) || LOCAL_CHROME_EXECUTABLE,
     });
 
     const page = await browser.newPage();
