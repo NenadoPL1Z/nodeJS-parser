@@ -51,7 +51,7 @@ app.post("/api/auth/login", getUser);
 
 app.get("/api/create/schedule", async (req, res) => {
   const result = await parseSchedule();
-  res.json(JSON.stringify(result));
+  res.json(result);
 });
 
 app.listen(PORT, async () => {
