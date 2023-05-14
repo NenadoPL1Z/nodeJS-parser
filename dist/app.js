@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScheduleModel = exports.sequelize = void 0;
 const express_1 = __importDefault(require("express"));
+const cron_1 = __importDefault(require("cron"));
 const pg_1 = __importDefault(require("pg"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -15,11 +16,6 @@ const getResIndexRoute_1 = require("./lib/services/api/getResIndexRoute");
 const getSchedule_1 = require("./lib/services/api/getSchedule");
 const getUser_1 = require("./lib/services/api/getUser");
 const services_1 = require("./lib/services/services");
-let secondStart = 0;
-setInterval(() => {
-    secondStart += 1;
-    console.log(secondStart);
-}, 1000);
 const app = (0, express_1.default)();
 exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
     dialect: "postgres",
@@ -45,6 +41,9 @@ app.get("/api/create/schedule", async (req, res) => {
     await (0, services_1.setScheduleDB)(JSON.stringify({ test: 123 }));
     res.json("ok");
 });
+(0, parseSchedule_1.parseSchedule)();
+const job = new cron_1.default.CronJob("*/10 * * * *", parseSchedule_1.parseSchedule);
+job.start();
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
@@ -55,7 +54,5 @@ app.listen(constants_1.PORT, async () => {
     catch (error) {
         console.error("Unable to connect to the database:", error);
     }
-    (0, parseSchedule_1.parseSchedule)().then();
-    setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });
 //# sourceMappingURL=app.js.map

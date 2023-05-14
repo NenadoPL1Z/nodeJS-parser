@@ -1,20 +1,15 @@
 import express from "express";
+import cron from "cron";
 import pg from "pg";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
+import { PORT } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
 import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
 import { getSchedule } from "./lib/services/api/getSchedule";
 import { getUser } from "./lib/services/api/getUser";
 import { setScheduleDB } from "./lib/services/services";
-
-let secondStart = 0;
-setInterval(() => {
-  secondStart += 1;
-  console.log(secondStart);
-}, 1000);
 
 const app = express();
 
@@ -55,6 +50,10 @@ app.get("/api/create/schedule", async (req, res) => {
   res.json("ok");
 });
 
+parseSchedule();
+const job = new cron.CronJob("*/10 * * * *", parseSchedule);
+job.start();
+
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
@@ -65,7 +64,4 @@ app.listen(PORT, async () => {
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
-
-  parseSchedule().then();
-  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
