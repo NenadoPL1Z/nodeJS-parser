@@ -19,10 +19,10 @@ export const sequelize = new Sequelize(
   {
     dialect: "postgres",
     protocol: "postgres",
-    dialectOptions: {
-      ssl: true,
-      native: true,
-    },
+    // dialectOptions: {
+    //   ssl: true,
+    //   native: true,
+    // },
   },
 );
 export const ScheduleModel =

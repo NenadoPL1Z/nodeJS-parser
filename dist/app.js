@@ -16,10 +16,10 @@ const app = (0, express_1.default)();
 exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
     dialect: "postgres",
     protocol: "postgres",
-    dialectOptions: {
-        ssl: true,
-        native: true,
-    },
+    // dialectOptions: {
+    //   ssl: true,
+    //   native: true,
+    // },
 });
 exports.ScheduleModel = {} ||
     exports.sequelize.define("Schedule", {
