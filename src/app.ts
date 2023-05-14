@@ -8,6 +8,7 @@ import { DataTypes, Sequelize } from "sequelize";
 import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
 import { getSchedule } from "./lib/services/api/getSchedule";
 import { getUser } from "./lib/services/api/getUser";
+import { setScheduleDB } from "./lib/services/services";
 
 let secondStart = 0;
 setInterval(() => {
@@ -50,8 +51,8 @@ app.get("/api/schedule", getSchedule);
 app.post("/api/auth/login", getUser);
 
 app.get("/api/create/schedule", async (req, res) => {
-  const result = await parseSchedule();
-  res.json(result);
+  await setScheduleDB(JSON.stringify({ test: 123 }));
+  res.json("ok");
 });
 
 app.listen(PORT, async () => {
