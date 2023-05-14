@@ -1,9 +1,10 @@
 import express from "express";
 import { LessonModel, IScheduleModel } from "../models/ScheduleModel";
-import { GroupListArr } from "../../types/types";
 import { prisma } from "../../app";
 
 type SuccessArg = { key?: string; data: any };
+type GroupListItem = { text: string; value: string };
+type GroupListArr = GroupListItem[];
 
 export const sendSuccessResponse = (res: express.Response) => {
   return ({ key = "data", data }: SuccessArg): void => {

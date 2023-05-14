@@ -8,7 +8,7 @@ import {
 } from "./lib/services/services";
 import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
-import { API_ERROR_USER_AUTH } from "./lib/constants/api/API_ERROR_NAMESPACES";
+import { API_ERROR } from "./lib/constants/API_ERROR";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { PrismaClient } from "@prisma/client";
 
@@ -65,21 +65,21 @@ app.post(
               });
             }
             sendError(400, {
-              message: API_ERROR_USER_AUTH.INVALID_REQUEST,
+              message: API_ERROR.INVALID_REQUEST,
               data: "",
             });
           })
           .catch((e) => {
             sendError(400, {
-              message: API_ERROR_USER_AUTH.INVALID_REQUEST,
+              message: API_ERROR.INVALID_REQUEST,
               data: e,
             });
             throw e;
           });
       }
-      sendError(400, { message: API_ERROR_USER_AUTH.INVALID_DATA, data: "" });
+      sendError(400, { message: API_ERROR.INVALID_DATA, data: "" });
     } catch (e) {
-      sendError(400, { message: API_ERROR_USER_AUTH.INVALID_REQUEST, data: e });
+      sendError(400, { message: API_ERROR.INVALID_REQUEST, data: e });
       throw e;
     }
   },

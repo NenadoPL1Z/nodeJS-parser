@@ -1,7 +1,6 @@
 import puppeteer from "puppeteer-core";
 import edgeChromium from "chrome-aws-lambda";
 
-import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
@@ -12,9 +11,10 @@ const SEND_BUTTON_SELECTOR = "#loginbtn";
 const LOCAL_CHROME_EXECUTABLE =
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
-export const authUser: AuthUserFunction<
-  Promise<BrowserModel | unknown>
-> = async (login, password) => {
+export const authUser = async (
+  login: string,
+  password: string,
+): Promise<BrowserModel | unknown> => {
   try {
     const browser = await puppeteer.launch({
       headless: false,

@@ -1,6 +1,6 @@
 import { authUser, checkAuthUser } from "./authUser";
 import { BrowserModel } from "../../models/BrowserModel";
-import { API_ERROR_USER_AUTH } from "../../constants/api/API_ERROR_NAMESPACES";
+import { API_ERROR } from "../../constants/API_ERROR";
 
 const PSEUDONYM_SELECTOR = "#page-header > div > div:last-child > h2";
 
@@ -22,7 +22,7 @@ export const parseUser = async (login: string, password: string) => {
       return pseudonym.trim();
     }
 
-    new Error(API_ERROR_USER_AUTH.INVALID_REQUEST);
+    new Error(API_ERROR.INVALID_REQUEST);
   } catch (e) {
     return e;
   }
