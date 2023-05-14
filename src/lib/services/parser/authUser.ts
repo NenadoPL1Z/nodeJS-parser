@@ -22,8 +22,8 @@ export const authUser = async (
       ignoreDefaultArgs: ["--disable-extensions"],
       args: [
         ...edgeChromium.args,
-        //   "--no-sandbox",
-        //   "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
         //   "--no-zygote",
         //   "--hide-scrollbars",
         //   "--disable-web-security",

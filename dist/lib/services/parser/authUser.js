@@ -20,8 +20,8 @@ const authUser = async (login, password) => {
             ignoreDefaultArgs: ["--disable-extensions"],
             args: [
                 ...chrome_aws_lambda_1.default.args,
-                //   "--no-sandbox",
-                //   "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
                 //   "--no-zygote",
                 //   "--hide-scrollbars",
                 //   "--disable-web-security",
