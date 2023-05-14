@@ -14,6 +14,7 @@ const sequelize_1 = require("sequelize");
 const getResIndexRoute_1 = require("./lib/services/api/getResIndexRoute");
 const getSchedule_1 = require("./lib/services/api/getSchedule");
 const getUser_1 = require("./lib/services/api/getUser");
+const services_1 = require("./lib/services/services");
 let secondStart = 0;
 setInterval(() => {
     secondStart += 1;
@@ -41,8 +42,8 @@ app.get("/", getResIndexRoute_1.getResIndexRoute);
 app.get("/api/schedule", getSchedule_1.getSchedule);
 app.post("/api/auth/login", getUser_1.getUser);
 app.get("/api/create/schedule", async (req, res) => {
-    const result = await (0, parseSchedule_1.parseSchedule)();
-    res.json(result);
+    await (0, services_1.setScheduleDB)(JSON.stringify({ test: 123 }));
+    res.json("ok");
 });
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
