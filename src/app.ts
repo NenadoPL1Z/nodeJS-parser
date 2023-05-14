@@ -50,10 +50,6 @@ app.get("/api/create/schedule", async (req, res) => {
   res.json("ok");
 });
 
-parseSchedule();
-const job = new cron.CronJob("*/10 * * * *", parseSchedule);
-job.start();
-
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
@@ -64,4 +60,9 @@ app.listen(PORT, async () => {
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
+
+  parseSchedule();
+
+  const job = new cron.CronJob("0 */10 * * * *", parseSchedule, null, true);
+  job.start();
 });

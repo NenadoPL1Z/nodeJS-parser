@@ -41,9 +41,6 @@ app.get("/api/create/schedule", async (req, res) => {
     await (0, services_1.setScheduleDB)(JSON.stringify({ test: 123 }));
     res.json("ok");
 });
-(0, parseSchedule_1.parseSchedule)();
-const job = new cron_1.default.CronJob("*/10 * * * *", parseSchedule_1.parseSchedule);
-job.start();
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
@@ -54,5 +51,8 @@ app.listen(constants_1.PORT, async () => {
     catch (error) {
         console.error("Unable to connect to the database:", error);
     }
+    (0, parseSchedule_1.parseSchedule)();
+    const job = new cron_1.default.CronJob("0 */10 * * * *", parseSchedule_1.parseSchedule, null, true);
+    job.start();
 });
 //# sourceMappingURL=app.js.map
