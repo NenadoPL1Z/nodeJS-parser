@@ -45,7 +45,7 @@ app.get("/api/parse/schedule", async (req, res) => {
     const result = await (0, parseSchedule_1.parseSchedule)();
     res.json(result);
 });
-app.listen(constants_1.PORT, async () => {
+const server = app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
         await exports.sequelize.authenticate();
@@ -59,4 +59,5 @@ app.listen(constants_1.PORT, async () => {
     const job = new cron_1.default.CronJob("0 */10 * * * *", parseSchedule_1.parseSchedule, null, true);
     job.start();
 });
+server.timeout = 600000;
 //# sourceMappingURL=app.js.map

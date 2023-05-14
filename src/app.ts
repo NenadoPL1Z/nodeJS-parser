@@ -55,7 +55,7 @@ app.get("/api/parse/schedule", async (req, res) => {
   res.json(result);
 });
 
-app.listen(PORT, async () => {
+const server = app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
   try {
@@ -71,3 +71,5 @@ app.listen(PORT, async () => {
   const job = new cron.CronJob("0 */10 * * * *", parseSchedule, null, true);
   job.start();
 });
+
+server.timeout = 600000;
