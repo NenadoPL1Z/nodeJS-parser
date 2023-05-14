@@ -1,0 +1,15 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Schedule {
+  id            Int    @id
+  ruUpdateTime String
+  result       String? @db.VarChar(300000)
+}
+

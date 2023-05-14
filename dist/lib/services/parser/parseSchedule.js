@@ -4,7 +4,6 @@ exports.parseSchedule = void 0;
 const authUser_1 = require("./authUser");
 const constants_1 = require("../../constants/constants");
 const services_1 = require("../services");
-const app_1 = require("../../../app");
 const SCHEDULE_URL = "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.php";
 const GROUPS_LIST_SELECTOR = "#id_listgroups";
 const SEND_BUTTON_SELECTOR = "#id_submitbutton";
@@ -38,9 +37,9 @@ const parseSchedule = async () => {
                 });
                 counts.current += 1;
                 console.log(counts);
+                await page.waitForTimeout(1000);
             }
             await browser.close();
-            await app_1.ScheduleModel.destroy({ where: { id: 1 } });
             (0, services_1.setScheduleDB)(JSON.stringify(result));
             console.log("success save");
             return;
