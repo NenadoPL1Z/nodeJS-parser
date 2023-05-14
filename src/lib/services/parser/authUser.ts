@@ -15,22 +15,23 @@ export const authUser: AuthUserFunction<
     const browser = await puppeteer.launch({
       headless: false,
       ignoreHTTPSErrors: true,
+      defaultViewport: { width: 1920, height: 1080 },
+      ignoreDefaultArgs: ["--disable-extensions"],
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--single-process",
         "--no-zygote",
+        "--hide-scrollbars",
+        "--disable-web-security",
       ],
-      ignoreDefaultArgs: ["--disable-extensions"],
       executablePath: IS_PROD
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
     });
 
     const page = await browser.newPage();
-
     await page.goto(LOGIN_URL);
-    await page.setViewport({ width: 1920, height: 1080 });
 
     await page.waitForSelector(LOGIN_INPUT_SELECTOR);
     await page.type(LOGIN_INPUT_SELECTOR, login);
