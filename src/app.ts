@@ -14,26 +14,30 @@ import { parseSchedule } from "./lib/services/parser/parseSchedule";
 
 const app = express();
 
-export const sequelize = new Sequelize(
-  "postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco",
-  {
-    dialect: "postgres",
-    protocol: "postgres",
-    dialectOptions: {
-      ssl: true,
-      native: true,
+export const sequelize =
+  ({} as any) ||
+  new Sequelize(
+    "postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco",
+    {
+      dialect: "postgres",
+      protocol: "postgres",
+      dialectOptions: {
+        ssl: true,
+        native: true,
+      },
     },
-  },
-);
-export const ScheduleModel = sequelize.define(
-  "Schedule",
-  {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
-    ruUpdateTime: { type: DataTypes.STRING },
-    result: { type: DataTypes.STRING(300000) },
-  },
-  { tableName: "Schedule", freezeTableName: true },
-);
+  );
+export const ScheduleModel =
+  ({} as any) ||
+  sequelize.define(
+    "Schedule",
+    {
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
+      ruUpdateTime: { type: DataTypes.STRING },
+      result: { type: DataTypes.STRING(300000) },
+    },
+    { tableName: "Schedule", freezeTableName: true },
+  );
 
 app.use(cors({ origin: "*" }));
 app.use(
