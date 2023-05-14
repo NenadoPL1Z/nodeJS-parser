@@ -1,13 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import {
-  sendErrorResponse,
-  sendSuccessResponse,
-} from "./lib/services/services";
-import { parseUser } from "./lib/services/parser/parseUser";
 import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
-import { API_ERROR } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
 import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
