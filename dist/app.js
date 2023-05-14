@@ -41,6 +41,10 @@ app.get("/api/create/schedule", async (req, res) => {
     await (0, services_1.setScheduleDB)(JSON.stringify({ test: 123 }));
     res.json("ok");
 });
+app.get("/api/parse/schedule", async (req, res) => {
+    const result = await (0, parseSchedule_1.parseSchedule)();
+    res.json(result);
+});
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {

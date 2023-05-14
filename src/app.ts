@@ -50,6 +50,11 @@ app.get("/api/create/schedule", async (req, res) => {
   res.json("ok");
 });
 
+app.get("/api/parse/schedule", async (req, res) => {
+  const result = await parseSchedule();
+  res.json(result);
+});
+
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
