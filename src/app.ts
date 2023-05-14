@@ -10,6 +10,9 @@ import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
 import { API_ERROR } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
+import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
+import { getSchedule } from "./lib/services/api/getSchedule";
+import { getUser } from "./lib/services/api/getUser";
 
 const app = express();
 
@@ -40,60 +43,11 @@ app.use(
     extended: true,
   }),
 );
-
 app.use(bodyParser.json());
 
-app.get("/", async (req: express.Request, res: express.Response) => {
-  res.json("Preco parser");
-});
-
-app.get(
-  "/api/schedule",
-  async (req: express.Request, res: express.Response) => {
-    const schedule = await ScheduleModel.findOne({ where: { id: 1 } });
-    res.json(schedule);
-  },
-);
-app.post(
-  "/api/auth/login",
-  async (req: express.Request, res: express.Response) => {
-    const sendSuccess = sendSuccessResponse(res);
-    const sendError = sendErrorResponse(res);
-
-    try {
-      const { login, password } = req.body;
-
-      if (login && password) {
-        return await parseUser(login, password)
-          .then((response) => {
-            if (typeof response === "string") {
-              return sendSuccess({
-                data: {
-                  userName: response,
-                  updatedAt: SCHEDULE_UPDATE_INTERVAL,
-                },
-              });
-            }
-            sendError(400, {
-              message: API_ERROR.INVALID_REQUEST,
-              data: "",
-            });
-          })
-          .catch((e) => {
-            sendError(400, {
-              message: API_ERROR.INVALID_REQUEST,
-              data: e,
-            });
-            throw e;
-          });
-      }
-      sendError(400, { message: API_ERROR.INVALID_DATA, data: "" });
-    } catch (e) {
-      sendError(400, { message: API_ERROR.INVALID_REQUEST, data: e });
-      throw e;
-    }
-  },
-);
+app.get("/", getResIndexRoute);
+app.get("/api/schedule", getSchedule);
+app.post("/api/auth/login", getUser);
 
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
