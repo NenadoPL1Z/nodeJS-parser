@@ -14,6 +14,11 @@ const sequelize_1 = require("sequelize");
 const getResIndexRoute_1 = require("./lib/services/api/getResIndexRoute");
 const getSchedule_1 = require("./lib/services/api/getSchedule");
 const getUser_1 = require("./lib/services/api/getUser");
+let secondStart = 0;
+setInterval(() => {
+    secondStart += 1;
+    console.log(secondStart);
+}, 1000);
 const app = (0, express_1.default)();
 exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
     dialect: "postgres",
@@ -35,6 +40,10 @@ app.use(body_parser_1.default.json());
 app.get("/", getResIndexRoute_1.getResIndexRoute);
 app.get("/api/schedule", getSchedule_1.getSchedule);
 app.post("/api/auth/login", getUser_1.getUser);
+app.get("/api/create/schedule", async (req, res) => {
+    const result = await (0, parseSchedule_1.parseSchedule)();
+    res.json(result);
+});
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {

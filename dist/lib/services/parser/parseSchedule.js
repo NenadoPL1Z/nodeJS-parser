@@ -20,7 +20,8 @@ const parseSchedule = async () => {
             await page.goto(SCHEDULE_URL);
             const groupListData = await page.evaluate(services_1.getGroupListData);
             counts.max = groupListData.length;
-            for (let i = 0; i < groupListData.length; i++) {
+            // groupListData.length
+            for (let i = 0; i < 1; i++) {
                 const currentGroup = groupListData[i];
                 await page.waitForSelector(GROUPS_LIST_SELECTOR);
                 await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
@@ -39,9 +40,10 @@ const parseSchedule = async () => {
                 console.log(counts);
             }
             await browser.close();
-            await (0, services_1.setScheduleDB)(JSON.stringify(result));
-            console.log("success save");
-            return;
+            if (result) {
+                await (0, services_1.setScheduleDB)(JSON.stringify(result));
+            }
+            return result;
         }
     }
     catch (e) {

@@ -91,6 +91,7 @@ const setScheduleDB = async (result) => {
         result,
     });
     await schedule.save();
+    console.log("success save");
 };
 exports.setScheduleDB = setScheduleDB;
 //# sourceMappingURL=services.js.map
