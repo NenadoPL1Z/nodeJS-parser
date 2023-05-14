@@ -36,14 +36,6 @@ app.get(
     res.json(schedule);
   },
 );
-
-app.post(
-  "/api/create/schedule",
-  async (req: express.Request, res: express.Response) => {
-    setScheduleDB(JSON.stringify({ test: 123 }));
-    res.json("success");
-  },
-);
 app.post(
   "/api/auth/login",
   async (req: express.Request, res: express.Response) => {

@@ -27,10 +27,6 @@ app.get("/api/schedule", async (req, res) => {
     const schedule = await exports.prisma.schedule.findUnique({ where: { id: 1 } });
     res.json(schedule);
 });
-app.post("/api/create/schedule", async (req, res) => {
-    (0, services_1.setScheduleDB)(JSON.stringify({ test: 123 }));
-    res.json("success");
-});
 app.post("/api/auth/login", async (req, res) => {
     const sendSuccess = (0, services_1.sendSuccessResponse)(res);
     const sendError = (0, services_1.sendErrorResponse)(res);
