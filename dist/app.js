@@ -12,7 +12,6 @@ const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
 const API_ERROR_NAMESPACES_1 = require("./lib/constants/api/API_ERROR_NAMESPACES");
 const sequelize_1 = require("sequelize");
-const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
 const app = (0, express_1.default)();
 exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
     dialect: "postgres",
@@ -82,14 +81,14 @@ app.post("/api/auth/login", async (req, res) => {
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
-        await exports.sequelize.authenticate();
-        await exports.sequelize.sync({ force: true });
+        // await sequelize.authenticate();
+        // await sequelize.sync({ force: true });
         console.log("Connection has been established successfully.");
     }
     catch (error) {
         console.error("Unable to connect to the database:", error);
     }
-    (0, parseSchedule_1.parseSchedule)().then();
-    setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
+    // parseSchedule().then();
+    // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
 //# sourceMappingURL=app.js.map
