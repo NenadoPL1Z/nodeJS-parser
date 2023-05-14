@@ -19,23 +19,21 @@ export const sequelize = new Sequelize(
   {
     dialect: "postgres",
     protocol: "postgres",
-    // dialectOptions: {
-    //   ssl: true,
-    //   native: true,
-    // },
+    dialectOptions: {
+      ssl: true,
+      native: true,
+    },
   },
 );
-export const ScheduleModel =
-  ({} as any) ||
-  sequelize.define(
-    "Schedule",
-    {
-      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
-      ruUpdateTime: { type: DataTypes.STRING },
-      result: { type: DataTypes.STRING(300000) },
-    },
-    { tableName: "Schedule", freezeTableName: true },
-  );
+export const ScheduleModel = sequelize.define(
+  "Schedule",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
+    ruUpdateTime: { type: DataTypes.STRING },
+    result: { type: DataTypes.STRING(300000) },
+  },
+  { tableName: "Schedule", freezeTableName: true },
+);
 
 app.use(cors({ origin: "*" }));
 app.use(
@@ -110,13 +108,13 @@ app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
   try {
-    // await sequelize.authenticate();
-    // await sequelize.sync({ force: true });
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true });
     console.log("Connection has been established successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
 
-  // parseSchedule().then();
-  // setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+  parseSchedule().then();
+  setInterval(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
 });
