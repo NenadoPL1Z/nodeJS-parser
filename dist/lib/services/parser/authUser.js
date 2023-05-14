@@ -20,12 +20,11 @@ const authUser = async (login, password) => {
             ignoreDefaultArgs: ["--disable-extensions"],
             args: [
                 ...chrome_aws_lambda_1.default.args,
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--single-process",
-                "--no-zygote",
-                "--hide-scrollbars",
-                "--disable-web-security",
+                //   "--no-sandbox",
+                //   "--disable-setuid-sandbox",
+                //   "--no-zygote",
+                //   "--hide-scrollbars",
+                //   "--disable-web-security",
             ],
             executablePath: (await chrome_aws_lambda_1.default.executablePath) || LOCAL_CHROME_EXECUTABLE,
         });

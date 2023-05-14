@@ -3,7 +3,6 @@ import edgeChromium from "chrome-aws-lambda";
 
 import { AuthUserFunction } from "../../../types/types";
 import { BrowserModel } from "../../models/BrowserModel";
-import { IS_PROD } from "../../constants/constants";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
@@ -24,12 +23,11 @@ export const authUser: AuthUserFunction<
       ignoreDefaultArgs: ["--disable-extensions"],
       args: [
         ...edgeChromium.args,
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-        "--hide-scrollbars",
-        "--disable-web-security",
+        //   "--no-sandbox",
+        //   "--disable-setuid-sandbox",
+        //   "--no-zygote",
+        //   "--hide-scrollbars",
+        //   "--disable-web-security",
       ],
       executablePath:
         (await edgeChromium.executablePath) || LOCAL_CHROME_EXECUTABLE,

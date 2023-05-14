@@ -1,11 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getScheduleData = exports.getGroupListData = exports.createScheduleJSON = exports.returnJSON = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+exports.setScheduleDB = exports.getScheduleData = exports.getGroupListData = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
+const app_1 = require("../../app");
 const sendSuccessResponse = (res) => {
     return ({ key = "data", data }) => {
         res.status(200);
@@ -21,20 +17,6 @@ const sendErrorResponse = (res) => {
     };
 };
 exports.sendErrorResponse = sendErrorResponse;
-const returnJSON = (res, jsonName) => {
-    const fileDirectory = path_1.default.resolve(__dirname, "../../../", "static/jsons");
-    res.sendFile(jsonName, { root: fileDirectory }, (err) => {
-        res.end();
-        if (err)
-            throw err;
-    });
-};
-exports.returnJSON = returnJSON;
-const createScheduleJSON = (data) => {
-    const json = JSON.stringify(data);
-    fs_1.default.writeFile("static/jsons/schedule.json", json, "utf8", () => undefined);
-};
-exports.createScheduleJSON = createScheduleJSON;
 const getGroupListData = () => {
     try {
         const result = [];
@@ -101,4 +83,14 @@ const getScheduleData = () => {
     }
 };
 exports.getScheduleData = getScheduleData;
+const setScheduleDB = async (result) => {
+    await app_1.ScheduleModel.destroy({ where: { id: 1 } });
+    const schedule = await app_1.ScheduleModel.build({
+        id: 1,
+        ruUpdateTime: new Date().toString(),
+        result,
+    });
+    await schedule.save();
+};
+exports.setScheduleDB = setScheduleDB;
 //# sourceMappingURL=services.js.map

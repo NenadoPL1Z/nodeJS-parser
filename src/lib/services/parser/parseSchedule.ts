@@ -2,11 +2,8 @@ import { authUser, checkAuthUser } from "./authUser";
 import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../constants/constants";
 import { BrowserModel } from "../../models/BrowserModel";
 import { GroupSchedulesModel } from "../../models/ScheduleModel";
-import {
-  createScheduleJSON,
-  getGroupListData,
-  getScheduleData,
-} from "../services";
+import { getGroupListData, getScheduleData, setScheduleDB } from "../services";
+import { ScheduleModel } from "../../../app";
 
 const SCHEDULE_URL =
   "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.php";
@@ -32,16 +29,16 @@ export const parseSchedule = async () => {
 
       await page.goto(SCHEDULE_URL);
 
-      await page.waitForSelector(GROUPS_LIST_SELECTOR);
-      await page.waitForSelector(SEND_BUTTON_SELECTOR);
-
       const groupListData = await page.evaluate(getGroupListData);
       counts.max = groupListData.length;
 
       for (let i = 0; i < groupListData.length; i++) {
         const currentGroup = groupListData[i];
 
+        await page.waitForSelector(GROUPS_LIST_SELECTOR);
         await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
+
+        await page.waitForSelector(SEND_BUTTON_SELECTOR);
         await page.click(SEND_BUTTON_SELECTOR);
 
         await page.waitForFunction(() => document.readyState === "complete", {
@@ -61,7 +58,11 @@ export const parseSchedule = async () => {
       }
 
       await browser.close();
-      createScheduleJSON({ createdAt: new Date().toString(), result });
+
+      await ScheduleModel.destroy({ where: { id: 1 } });
+      setScheduleDB(JSON.stringify(result));
+      console.log("success save");
+
       return;
     }
   } catch (e) {

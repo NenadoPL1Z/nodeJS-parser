@@ -4,7 +4,7 @@ export interface LessonModel {
   timeEnd: string | null;
   name: string | null;
 }
-export interface ScheduleModel {
+export interface IScheduleModel {
   date: string;
   lessons: LessonModel[];
 }
@@ -12,5 +12,5 @@ export interface ScheduleModel {
 export interface GroupSchedulesModel {
   name: string;
   value: string;
-  schedules: ScheduleModel[];
+  schedules: IScheduleModel[];
 }

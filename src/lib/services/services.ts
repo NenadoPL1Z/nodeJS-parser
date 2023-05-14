@@ -1,8 +1,7 @@
 import express from "express";
-import fs from "fs";
-import { LessonModel, ScheduleModel } from "../models/ScheduleModel";
+import { LessonModel, IScheduleModel } from "../models/ScheduleModel";
 import { GroupListArr } from "../../types/types";
-import path from "path";
+import { ScheduleModel } from "../../app";
 
 type SuccessArg = { key?: string; data: any };
 
@@ -20,20 +19,6 @@ export const sendErrorResponse = (res: express.Response) => {
     res.json({ error });
   };
 };
-
-export const returnJSON = (res: express.Response, jsonName: string) => {
-  const fileDirectory = path.resolve(__dirname, "../../../", "static/jsons");
-  res.sendFile(jsonName, { root: fileDirectory }, (err) => {
-    res.end();
-    if (err) throw err;
-  });
-};
-
-export const createScheduleJSON = (data: any) => {
-  const json = JSON.stringify(data);
-  fs.writeFile("static/jsons/schedule.json", json, "utf8", () => undefined);
-};
-
 export const getGroupListData = () => {
   try {
     const result: GroupListArr = [];
@@ -68,7 +53,7 @@ export const getScheduleData = () => {
     const CURRENT_LESSON_TIME_SELECTOR = ".urk_timewindow";
     const CURREN_LESSON_DESCRIPTION_SELECTOR = ".urk_lessondescription";
 
-    const schedulesData: ScheduleModel[] = [];
+    const schedulesData: IScheduleModel[] = [];
 
     const schedulesElement = document.querySelector(
       CONTAINER_SELECTOR,
@@ -81,7 +66,7 @@ export const getScheduleData = () => {
     const schedulesChildren = schedulesElement.children;
 
     for (let i = 0; i < schedulesChildren.length; i++) {
-      const scheduleItem: ScheduleModel = { date: "", lessons: [] };
+      const scheduleItem: IScheduleModel = { date: "", lessons: [] };
       const scheduleItemElement = schedulesChildren[i];
 
       const date = scheduleItemElement.querySelector(CURRENT_DATE_SELECTOR);
@@ -124,4 +109,15 @@ export const getScheduleData = () => {
     return [];
     throw e;
   }
+};
+
+export const setScheduleDB = async (result: string) => {
+  await ScheduleModel.destroy({ where: { id: 1 } });
+  const schedule = await ScheduleModel.build({
+    id: 1,
+    ruUpdateTime: new Date().toString(),
+    result,
+  });
+
+  await schedule.save();
 };
