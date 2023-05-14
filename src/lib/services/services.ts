@@ -1,6 +1,6 @@
 import express from "express";
 import { LessonModel, IScheduleModel } from "../models/ScheduleModel";
-import { prisma } from "../../app";
+import { ScheduleModel } from "../../app";
 
 type SuccessArg = { key?: string; data: any };
 type GroupListItem = { text: string; value: string };
@@ -113,12 +113,12 @@ export const getScheduleData = () => {
 };
 
 export const setScheduleDB = async (result: string) => {
-  await prisma.schedule.delete({ where: { id: 1 } });
-  await prisma.schedule.create({
-    data: {
-      id: 1,
-      ruUpdateTime: new Date().toString(),
-      result,
-    },
+  await ScheduleModel.destroy({ where: { id: 1 } });
+  const schedule = await ScheduleModel.build({
+    id: 1,
+    ruUpdateTime: new Date().toString(),
+    result,
   });
+
+  await schedule.save();
 };

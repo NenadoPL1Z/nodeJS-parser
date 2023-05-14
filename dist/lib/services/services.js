@@ -84,14 +84,13 @@ const getScheduleData = () => {
 };
 exports.getScheduleData = getScheduleData;
 const setScheduleDB = async (result) => {
-    await app_1.prisma.schedule.delete({ where: { id: 1 } });
-    await app_1.prisma.schedule.create({
-        data: {
-            id: 1,
-            ruUpdateTime: new Date().toString(),
-            result,
-        },
+    await app_1.ScheduleModel.destroy({ where: { id: 1 } });
+    const schedule = await app_1.ScheduleModel.build({
+        id: 1,
+        ruUpdateTime: new Date().toString(),
+        result,
     });
+    await schedule.save();
 };
 exports.setScheduleDB = setScheduleDB;
 //# sourceMappingURL=services.js.map

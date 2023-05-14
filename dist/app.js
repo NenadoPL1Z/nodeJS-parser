@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.prisma = void 0;
+exports.ScheduleModel = exports.sequelize = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -12,9 +12,21 @@ const parseUser_1 = require("./lib/services/parser/parseUser");
 const constants_1 = require("./lib/constants/constants");
 const constants_2 = require("./lib/constants/constants");
 const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
-const client_1 = require("@prisma/client");
+const sequelize_1 = require("sequelize");
 const app = (0, express_1.default)();
-exports.prisma = new client_1.PrismaClient();
+exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+        ssl: true,
+        native: true,
+    },
+});
+exports.ScheduleModel = exports.sequelize.define("Schedule", {
+    id: { type: sequelize_1.DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
+    ruUpdateTime: { type: sequelize_1.DataTypes.STRING },
+    result: { type: sequelize_1.DataTypes.STRING(300000) },
+}, { tableName: "Schedule", freezeTableName: true });
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({
     extended: true,
@@ -24,7 +36,7 @@ app.get("/", async (req, res) => {
     res.json("Preco parser");
 });
 app.get("/api/schedule", async (req, res) => {
-    const schedule = await exports.prisma.schedule.findUnique({ where: { id: 1 } });
+    const schedule = await exports.ScheduleModel.findOne({ where: { id: 1 } });
     res.json(schedule);
 });
 app.post("/api/auth/login", async (req, res) => {
@@ -65,6 +77,14 @@ app.post("/api/auth/login", async (req, res) => {
 });
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
+    try {
+        await exports.sequelize.authenticate();
+        await exports.sequelize.sync({ force: true });
+        console.log("Connection has been established successfully.");
+    }
+    catch (error) {
+        console.error("Unable to connect to the database:", error);
+    }
     (0, parseSchedule_1.parseSchedule)().then();
     setInterval(parseSchedule_1.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });

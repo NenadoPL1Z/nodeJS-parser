@@ -37,10 +37,9 @@ const parseSchedule = async () => {
                 });
                 counts.current += 1;
                 console.log(counts);
-                await page.waitForTimeout(1000);
             }
             await browser.close();
-            (0, services_1.setScheduleDB)(JSON.stringify(result));
+            await (0, services_1.setScheduleDB)(JSON.stringify(result));
             console.log("success save");
             return;
         }

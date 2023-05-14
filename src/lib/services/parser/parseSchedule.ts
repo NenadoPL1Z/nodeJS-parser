@@ -54,14 +54,12 @@ export const parseSchedule = async () => {
 
         counts.current += 1;
         console.log(counts);
-        await page.waitForTimeout(1000);
       }
 
       await browser.close();
+      await setScheduleDB(JSON.stringify(result));
 
-      setScheduleDB(JSON.stringify(result));
       console.log("success save");
-
       return;
     }
   } catch (e) {
