@@ -59,7 +59,7 @@ export const parseSchedule = async () => {
 
       await browser.close();
 
-      if (result) {
+      if (result.length) {
         await setScheduleDB(JSON.stringify(result));
       }
 

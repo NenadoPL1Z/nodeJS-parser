@@ -16,7 +16,6 @@ export const authUser = async (
 ): Promise<BrowserModel | unknown> => {
   try {
     const browser = await puppeteer.launch({
-      headless: false,
       ignoreHTTPSErrors: true,
       defaultViewport: { width: 1920, height: 1080 },
       ignoreDefaultArgs: ["--disable-extensions"],
@@ -43,6 +42,7 @@ export const authUser = async (
 
     await page.waitForSelector(SEND_BUTTON_SELECTOR);
     await page.click(SEND_BUTTON_SELECTOR);
+    await page.waitForNavigation();
 
     return {
       browser,
