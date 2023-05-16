@@ -31,8 +31,7 @@ export const parseSchedule = async () => {
       const groupListData = await page.evaluate(getGroupListData);
       counts.max = groupListData.length;
 
-      // groupListData.length
-      for (let i = 0; i < 1; i++) {
+      for (let i = 0; i < groupListData.length; i++) {
         const currentGroup = groupListData[i];
 
         await page.waitForSelector(GROUPS_LIST_SELECTOR);

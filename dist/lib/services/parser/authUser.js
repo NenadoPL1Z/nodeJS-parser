@@ -14,6 +14,7 @@ const LOCAL_CHROME_EXECUTABLE = "/Applications/Google Chrome.app/Contents/MacOS/
 const authUser = async (login, password) => {
     try {
         const browser = await puppeteer_core_1.default.launch({
+            headless: false,
             ignoreHTTPSErrors: true,
             defaultViewport: { width: 1920, height: 1080 },
             ignoreDefaultArgs: ["--disable-extensions"],
@@ -35,7 +36,8 @@ const authUser = async (login, password) => {
         await page.type(PASSWORD_INPUT_SELECTOR, password);
         await page.waitForSelector(SEND_BUTTON_SELECTOR);
         await page.click(SEND_BUTTON_SELECTOR);
-        await page.waitForNavigation();
+        await page.waitForNavigation({ timeout: 240000 });
+        console.log("auth");
         return {
             browser,
             page,
