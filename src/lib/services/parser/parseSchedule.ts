@@ -2,6 +2,7 @@ import { authUser, checkAuthUser } from "./authUser";
 import {
   ADMIN_LOGIN,
   ADMIN_PASSWORD,
+  MICRO_TIMEOUT_PARSER,
   SCHEDULE_UPDATE_INTERVAL,
 } from "../../constants/constants";
 import { BrowserModel } from "../../models/BrowserModel";
@@ -39,14 +40,18 @@ export const parseSchedule = async () => {
       for (let i = 0; i < groupListData.length; i++) {
         const currentGroup = groupListData[i];
 
-        await page.waitForSelector(GROUPS_LIST_SELECTOR);
+        await page.waitForSelector(GROUPS_LIST_SELECTOR, {
+          timeout: MICRO_TIMEOUT_PARSER,
+        });
         await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
 
-        await page.waitForSelector(SEND_BUTTON_SELECTOR);
+        await page.waitForSelector(SEND_BUTTON_SELECTOR, {
+          timeout: MICRO_TIMEOUT_PARSER,
+        });
         await page.click(SEND_BUTTON_SELECTOR);
 
         await page.waitForFunction(() => document.readyState === "complete", {
-          timeout: 240000,
+          timeout: MICRO_TIMEOUT_PARSER,
         });
 
         const groupScheduleData = await page.evaluate(getScheduleData);
