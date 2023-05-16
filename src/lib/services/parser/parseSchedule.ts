@@ -1,5 +1,9 @@
 import { authUser, checkAuthUser } from "./authUser";
-import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../constants/constants";
+import {
+  ADMIN_LOGIN,
+  ADMIN_PASSWORD,
+  SCHEDULE_UPDATE_INTERVAL,
+} from "../../constants/constants";
 import { BrowserModel } from "../../models/BrowserModel";
 import { GroupSchedulesModel } from "../../models/ScheduleModel";
 import { getGroupListData, getScheduleData, setScheduleDB } from "../services";
@@ -12,6 +16,7 @@ const SEND_BUTTON_SELECTOR = "#id_submitbutton";
 
 export const parseSchedule = async () => {
   const result: GroupSchedulesModel[] = [];
+
   const counts = {
     current: 0,
     max: 0,
@@ -62,9 +67,11 @@ export const parseSchedule = async () => {
         await setScheduleDB(JSON.stringify(result));
       }
 
+      setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
       return result;
     }
   } catch (e) {
+    setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
     console.log(e);
     throw e;
   }

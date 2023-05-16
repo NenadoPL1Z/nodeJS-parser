@@ -39,7 +39,7 @@ export const authUser = async (
     await page.waitForSelector(SEND_BUTTON_SELECTOR);
     await page.click(SEND_BUTTON_SELECTOR);
 
-    await page.waitForNavigation({ timeout: 240000 });
+    await page.waitForTimeout(5000);
     console.log("auth");
 
     return {

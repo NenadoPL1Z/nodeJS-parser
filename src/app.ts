@@ -65,17 +65,5 @@ app.listen(PORT, async () => {
     console.error("Unable to connect to the database:", error);
   }
 
-  let startParse = false;
-  await parseSchedule().finally();
-
-  setInterval(() => {
-    if (startParse) {
-      return;
-    }
-    startParse = true;
-
-    parseSchedule().finally(() => {
-      startParse = false;
-    });
-  }, SCHEDULE_UPDATE_INTERVAL);
+  parseSchedule().finally();
 });

@@ -42,10 +42,12 @@ const parseSchedule = async () => {
             if (result.length) {
                 await (0, services_1.setScheduleDB)(JSON.stringify(result));
             }
+            setTimeout(exports.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
             return result;
         }
     }
     catch (e) {
+        setTimeout(exports.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
         console.log(e);
         throw e;
     }

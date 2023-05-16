@@ -54,16 +54,6 @@ app.listen(constants_1.PORT, async () => {
     catch (error) {
         console.error("Unable to connect to the database:", error);
     }
-    let startParse = false;
-    await (0, parseSchedule_1.parseSchedule)().finally();
-    setInterval(() => {
-        if (startParse) {
-            return;
-        }
-        startParse = true;
-        (0, parseSchedule_1.parseSchedule)().finally(() => {
-            startParse = false;
-        });
-    }, constants_1.SCHEDULE_UPDATE_INTERVAL);
+    (0, parseSchedule_1.parseSchedule)().finally();
 });
 //# sourceMappingURL=app.js.map

@@ -33,7 +33,7 @@ const authUser = async (login, password) => {
         await page.type(PASSWORD_INPUT_SELECTOR, password);
         await page.waitForSelector(SEND_BUTTON_SELECTOR);
         await page.click(SEND_BUTTON_SELECTOR);
-        await page.waitForNavigation({ timeout: 240000 });
+        await page.waitForTimeout(5000);
         console.log("auth");
         return {
             browser,
