@@ -44,7 +44,7 @@ app.get("/api/parse/schedule", async (req, res) => {
     const result = await (0, parseSchedule_1.parseSchedule)();
     res.json(result);
 });
-const server = app.listen(constants_1.PORT, async () => {
+app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
         await exports.sequelize.authenticate();
@@ -66,5 +66,4 @@ const server = app.listen(constants_1.PORT, async () => {
         });
     }, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });
-server.timeout = 600000;
 //# sourceMappingURL=app.js.map

@@ -54,7 +54,7 @@ app.get("/api/parse/schedule", async (req, res) => {
   res.json(result);
 });
 
-const server = app.listen(PORT, async () => {
+app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
   try {
@@ -79,5 +79,3 @@ const server = app.listen(PORT, async () => {
     });
   }, SCHEDULE_UPDATE_INTERVAL);
 });
-
-server.timeout = 600000;
