@@ -1,9 +1,8 @@
 import express from "express";
-import cron from "cron";
 import pg from "pg";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { PORT } from "./lib/constants/constants";
+import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
 import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
@@ -66,10 +65,19 @@ const server = app.listen(PORT, async () => {
     console.error("Unable to connect to the database:", error);
   }
 
-  parseSchedule();
+  let startParse = false;
+  await parseSchedule().finally();
 
-  const job = new cron.CronJob("0 */10 * * * *", parseSchedule, null, true);
-  job.start();
+  setInterval(() => {
+    if (startParse) {
+      return;
+    }
+    startParse = true;
+
+    parseSchedule().finally(() => {
+      startParse = false;
+    });
+  }, SCHEDULE_UPDATE_INTERVAL);
 });
 
 server.timeout = 600000;

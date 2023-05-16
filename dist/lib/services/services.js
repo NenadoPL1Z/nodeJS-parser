@@ -84,14 +84,17 @@ const getScheduleData = () => {
 };
 exports.getScheduleData = getScheduleData;
 const setScheduleDB = async (result) => {
-    await app_1.ScheduleModel.destroy({ where: { id: 1 } });
-    const schedule = await app_1.ScheduleModel.build({
-        id: 1,
-        ruUpdateTime: new Date().toString(),
-        result,
-    });
-    await schedule.save();
-    console.log("success save");
+    if (result) {
+        await app_1.ScheduleModel.destroy({ where: { id: 1 } });
+        const schedule = await app_1.ScheduleModel.build({
+            id: 1,
+            ruUpdateTime: new Date().toString(),
+            result,
+        });
+        await schedule.save();
+        console.log("success save");
+    }
+    console.log("empty result");
 };
 exports.setScheduleDB = setScheduleDB;
 //# sourceMappingURL=services.js.map

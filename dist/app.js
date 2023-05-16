@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScheduleModel = exports.sequelize = void 0;
 const express_1 = __importDefault(require("express"));
-const cron_1 = __importDefault(require("cron"));
 const pg_1 = __importDefault(require("pg"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -55,9 +54,17 @@ const server = app.listen(constants_1.PORT, async () => {
     catch (error) {
         console.error("Unable to connect to the database:", error);
     }
-    (0, parseSchedule_1.parseSchedule)();
-    const job = new cron_1.default.CronJob("0 */10 * * * *", parseSchedule_1.parseSchedule, null, true);
-    job.start();
+    let startParse = false;
+    await (0, parseSchedule_1.parseSchedule)().finally();
+    setInterval(() => {
+        if (startParse) {
+            return;
+        }
+        startParse = true;
+        (0, parseSchedule_1.parseSchedule)().finally(() => {
+            startParse = false;
+        });
+    }, constants_1.SCHEDULE_UPDATE_INTERVAL);
 });
 server.timeout = 600000;
 //# sourceMappingURL=app.js.map
