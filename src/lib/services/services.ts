@@ -122,6 +122,7 @@ export const setScheduleDB = async (result: string) => {
     });
     await schedule.save();
     console.log("success save");
+  } else {
+    console.log("empty result");
   }
-  console.log("empty result");
 };
