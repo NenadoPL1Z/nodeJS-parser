@@ -47,7 +47,7 @@ export const authUser = async (
       page,
     };
   } catch (e) {
-    console.log(e);
+    console.log("false auth", e);
     throw e;
   }
 };

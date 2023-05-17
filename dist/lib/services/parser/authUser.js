@@ -41,7 +41,7 @@ const authUser = async (login, password) => {
         };
     }
     catch (e) {
-        console.log(e);
+        console.log("false auth", e);
         throw e;
     }
 };
