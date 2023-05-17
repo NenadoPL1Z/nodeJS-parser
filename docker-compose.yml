@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  app:
+    image: preco-parser
+    container_name: preco-parser
+    restart: always
+    ports:
+      - 3000:3000
