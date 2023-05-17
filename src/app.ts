@@ -2,13 +2,11 @@ import express from "express";
 import pg from "pg";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { PORT, SCHEDULE_UPDATE_INTERVAL } from "./lib/constants/constants";
+import { PORT } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
-import { getResIndexRoute } from "./lib/services/api/getResIndexRoute";
 import { getSchedule } from "./lib/services/api/getSchedule";
 import { getUser } from "./lib/services/api/getUser";
-import { setScheduleDB } from "./lib/services/services";
 
 const app = express();
 
@@ -40,19 +38,12 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.get("/", getResIndexRoute);
+app.get("/", (req: express.Request, res: express.Response) => {
+  res.json("Preco parser");
+});
+
 app.get("/api/schedule", getSchedule);
 app.post("/api/auth/login", getUser);
-
-app.get("/api/create/schedule", async (req, res) => {
-  await setScheduleDB(JSON.stringify({ test: 123 }));
-  res.json("ok");
-});
-
-app.get("/api/parse/schedule", async (req, res) => {
-  const result = await parseSchedule();
-  res.json(result);
-});
 
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
