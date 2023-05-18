@@ -32,7 +32,7 @@ export const parseSchedule = async () => {
     if (checkAuthUser(authPage)) {
       const { browser, page } = authPage;
 
-      await page.goto(SCHEDULE_URL);
+      await page.goto(SCHEDULE_URL, { timeout: MICRO_TIMEOUT_PARSER });
 
       const groupListData = await page.evaluate(getGroupListData);
       counts.max = groupListData.length;

@@ -104,14 +104,19 @@ export const getScheduleData = () => {
 
 export const setScheduleDB = async (result: string) => {
   if (result) {
-    await ScheduleModel.destroy({ where: { id: 1 } });
-    const schedule = await ScheduleModel.build({
-      id: 1,
-      ruUpdateTime: new Date().toString(),
-      result,
-    });
-    await schedule.save();
-    console.log("success save");
+    await ScheduleModel.update(
+      {
+        ruUpdateTime: new Date().toString(),
+        result,
+      },
+      { where: { id: 1 } },
+    )
+      .then(() => {
+        console.log("success save");
+      })
+      .catch(() => {
+        console.log("error save");
+      });
   } else {
     console.log("empty result");
   }

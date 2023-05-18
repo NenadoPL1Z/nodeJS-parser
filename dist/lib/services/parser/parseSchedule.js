@@ -17,7 +17,7 @@ const parseSchedule = async () => {
         const authPage = (await (0, authUser_1.authUser)(constants_1.ADMIN_LOGIN, constants_1.ADMIN_PASSWORD));
         if ((0, authUser_1.checkAuthUser)(authPage)) {
             const { browser, page } = authPage;
-            await page.goto(SCHEDULE_URL);
+            await page.goto(SCHEDULE_URL, { timeout: constants_1.MICRO_TIMEOUT_PARSER });
             const groupListData = await page.evaluate(services_1.getGroupListData);
             counts.max = groupListData.length;
             for (let i = 0; i < groupListData.length; i++) {

@@ -40,7 +40,6 @@ app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
         await exports.sequelize.authenticate();
-        await exports.sequelize.sync({ force: true });
         console.log("Connection has been established successfully.");
     }
     catch (error) {
