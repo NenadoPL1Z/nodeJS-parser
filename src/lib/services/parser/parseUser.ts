@@ -11,7 +11,7 @@ export const parseUser = async (login: string, password: string) => {
     if (checkAuthUser(authPage)) {
       const { browser, page } = authPage;
 
-      await page.waitForSelector(PSEUDONYM_SELECTOR, { timeout: 8000 });
+      await page.waitForSelector(PSEUDONYM_SELECTOR, { timeout: 20000 });
       const FIOElement = await page.$(PSEUDONYM_SELECTOR);
 
       const pseudonym =

@@ -1,5 +1,6 @@
 import { BrowserModel } from "../../models/BrowserModel";
 import puppeteer from "puppeteer";
+import { MICRO_TIMEOUT_PARSER } from "../../constants/constants";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
@@ -26,16 +27,22 @@ export const authUser = async (
   });
 
   const page = await browser.newPage();
-  await page.goto(LOGIN_URL);
+  await page.goto(LOGIN_URL, { timeout: MICRO_TIMEOUT_PARSER });
   await page.setViewport({ width: 1920, height: 1080 });
 
-  await page.waitForSelector(LOGIN_INPUT_SELECTOR);
+  await page.waitForSelector(LOGIN_INPUT_SELECTOR, {
+    timeout: MICRO_TIMEOUT_PARSER,
+  });
   await page.type(LOGIN_INPUT_SELECTOR, login);
 
-  await page.waitForSelector(PASSWORD_INPUT_SELECTOR);
+  await page.waitForSelector(PASSWORD_INPUT_SELECTOR, {
+    timeout: MICRO_TIMEOUT_PARSER,
+  });
   await page.type(PASSWORD_INPUT_SELECTOR, password);
 
-  await page.waitForSelector(SEND_BUTTON_SELECTOR);
+  await page.waitForSelector(SEND_BUTTON_SELECTOR, {
+    timeout: MICRO_TIMEOUT_PARSER,
+  });
   await page.click(SEND_BUTTON_SELECTOR);
 
   await page.waitForTimeout(5000);

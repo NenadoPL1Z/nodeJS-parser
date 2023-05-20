@@ -9,7 +9,7 @@ const parseUser = async (login, password) => {
         const authPage = (await (0, authUser_1.authUser)(login, password));
         if ((0, authUser_1.checkAuthUser)(authPage)) {
             const { browser, page } = authPage;
-            await page.waitForSelector(PSEUDONYM_SELECTOR, { timeout: 8000 });
+            await page.waitForSelector(PSEUDONYM_SELECTOR, { timeout: 20000 });
             const FIOElement = await page.$(PSEUDONYM_SELECTOR);
             const pseudonym = (await page.evaluate((el) => el?.textContent, FIOElement)) || "";
             await browser.close();
