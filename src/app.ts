@@ -56,7 +56,7 @@ app.listen(PORT, async () => {
   }
 
   if (process.env.SKIP_PARSE_SCHEDULE) {
-    console.log("scrip parse");
+    console.log("skip parse");
     return;
   } else {
     console.log("parse");

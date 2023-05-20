@@ -46,7 +46,7 @@ app.listen(constants_1.PORT, async () => {
         console.error("Unable to connect to the database:", error);
     }
     if (process.env.SKIP_PARSE_SCHEDULE) {
-        console.log("scrip parse");
+        console.log("skip parse");
         return;
     }
     else {
