@@ -16,11 +16,10 @@ const authUser = async (login, password) => {
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
-            //   "--no-zygote",
-            //   "--hide-scrollbars",
-            //   "--disable-web-security",
+            "--shm-size=3gb",
+            "--disable-dev-shm-usage",
         ],
-        executablePath: process.env.NODE_ENV === "production"
+        executablePath: constants_1.IS_PRODUCTION
             ? process.env.PUPPETEER_EXECUTABLE_PATH
             : puppeteer_1.default.executablePath(),
     });

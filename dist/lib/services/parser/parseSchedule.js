@@ -42,6 +42,7 @@ const parseSchedule = async () => {
                 counts.current += 1;
                 console.log(counts);
             }
+            await page.close();
             await browser.close();
             if (result.length) {
                 await (0, services_1.setScheduleDB)(JSON.stringify(result));

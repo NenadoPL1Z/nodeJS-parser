@@ -17,6 +17,7 @@ export const parseUser = async (login: string, password: string) => {
       const pseudonym =
         (await page.evaluate((el) => el?.textContent, FIOElement)) || "";
 
+      await page.close();
       await browser.close();
 
       return pseudonym.trim();

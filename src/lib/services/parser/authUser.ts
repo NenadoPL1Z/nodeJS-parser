@@ -1,6 +1,6 @@
 import { BrowserModel } from "../../models/BrowserModel";
 import puppeteer from "puppeteer";
-import { MICRO_TIMEOUT_PARSER } from "../../constants/constants";
+import { IS_PRODUCTION, MICRO_TIMEOUT_PARSER } from "../../constants/constants";
 
 const LOGIN_URL = "https://moodle.preco.ru/login/index.php";
 const LOGIN_INPUT_SELECTOR = "#username";
@@ -16,14 +16,12 @@ export const authUser = async (
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
-      //   "--no-zygote",
-      //   "--hide-scrollbars",
-      //   "--disable-web-security",
+      "--shm-size=3gb",
+      "--disable-dev-shm-usage",
     ],
-    executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
+    executablePath: IS_PRODUCTION
+      ? process.env.PUPPETEER_EXECUTABLE_PATH
+      : puppeteer.executablePath(),
   });
 
   const page = await browser.newPage();

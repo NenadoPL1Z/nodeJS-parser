@@ -2,7 +2,7 @@ import express from "express";
 import pg from "pg";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { PORT } from "./lib/constants/constants";
+import { IS_SKIP_PARSE, PORT } from "./lib/constants/constants";
 import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
 import { getSchedule } from "./lib/services/api/getSchedule";
@@ -55,13 +55,7 @@ app.listen(PORT, async () => {
     console.error("Unable to connect to the database:", error);
   }
 
-  console.log(
-    process.env.SKIP_PARSE_SCHEDULE,
-    typeof process.env.SKIP_PARSE_SCHEDULE,
-    process.env.SKIP_PARSE_SCHEDULE === "true",
-  );
-
-  if (process.env.SKIP_PARSE_SCHEDULE === "true") {
+  if (IS_SKIP_PARSE) {
     console.log("skip parse");
     return;
   } else {
