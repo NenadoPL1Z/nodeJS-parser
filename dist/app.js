@@ -45,11 +45,13 @@ app.listen(constants_1.PORT, async () => {
     catch (error) {
         console.error("Unable to connect to the database:", error);
     }
-    console.log(process.env.SKIP_PARSE_SCHEDULE);
     if (process.env.SKIP_PARSE_SCHEDULE) {
+        console.log("scrip parse");
         return;
     }
-    console.log("parse");
-    (0, parseSchedule_1.parseSchedule)().finally();
+    else {
+        console.log("parse");
+        (0, parseSchedule_1.parseSchedule)().finally();
+    }
 });
 //# sourceMappingURL=app.js.map
