@@ -55,6 +55,12 @@ app.listen(PORT, async () => {
     console.error("Unable to connect to the database:", error);
   }
 
+  console.log(
+    process.env.SKIP_PARSE_SCHEDULE,
+    typeof process.env.SKIP_PARSE_SCHEDULE,
+    process.env.SKIP_PARSE_SCHEDULE === "true",
+  );
+
   if (process.env.SKIP_PARSE_SCHEDULE === "true") {
     console.log("skip parse");
     return;
