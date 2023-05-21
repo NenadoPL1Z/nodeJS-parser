@@ -21,7 +21,7 @@ const getUser = async (req, res) => {
                     });
                 }
                 sendError(400, {
-                    message: constants_1.API_ERROR.INVALID_REQUEST,
+                    message: constants_1.API_ERROR.INVALID_DATA,
                     data: "",
                 });
             })

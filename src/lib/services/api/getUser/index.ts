@@ -25,7 +25,7 @@ export const getUser = async (req: express.Request, res: express.Response) => {
             });
           }
           sendError(400, {
-            message: API_ERROR.INVALID_REQUEST,
+            message: API_ERROR.INVALID_DATA,
             data: "",
           });
         })

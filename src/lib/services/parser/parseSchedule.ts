@@ -32,53 +32,60 @@ export const parseSchedule = async () => {
     if (checkAuthUser(authPage)) {
       const { browser, page } = authPage;
 
-      await page.goto(SCHEDULE_URL, { timeout: MICRO_TIMEOUT_PARSER });
+      try {
+        await page.goto(SCHEDULE_URL, { timeout: MICRO_TIMEOUT_PARSER });
 
-      const groupListData = await page.evaluate(getGroupListData);
-      counts.max = groupListData.length;
+        const groupListData = await page.evaluate(getGroupListData);
+        counts.max = groupListData.length;
 
-      for (let i = 0; i < groupListData.length; i++) {
-        const currentGroup = groupListData[i];
+        for (let i = 0; i < groupListData.length; i++) {
+          const currentGroup = groupListData[i];
 
-        await page.waitForSelector(GROUPS_LIST_SELECTOR, {
-          timeout: MICRO_TIMEOUT_PARSER,
-        });
-        await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
+          await page.waitForSelector(GROUPS_LIST_SELECTOR, {
+            timeout: MICRO_TIMEOUT_PARSER,
+          });
+          await page.select(GROUPS_LIST_SELECTOR, currentGroup.value);
 
-        await page.waitForSelector(SEND_BUTTON_SELECTOR, {
-          timeout: MICRO_TIMEOUT_PARSER,
-        });
-        await page.click(SEND_BUTTON_SELECTOR);
+          await page.waitForSelector(SEND_BUTTON_SELECTOR, {
+            timeout: MICRO_TIMEOUT_PARSER,
+          });
+          await page.click(SEND_BUTTON_SELECTOR);
 
-        await page.waitForFunction(() => document.readyState === "complete", {
-          timeout: MICRO_TIMEOUT_PARSER,
-        });
+          await page.waitForFunction(() => document.readyState === "complete", {
+            timeout: MICRO_TIMEOUT_PARSER,
+          });
 
-        const groupScheduleData = await page.evaluate(getScheduleData);
+          const groupScheduleData = await page.evaluate(getScheduleData);
 
-        result.push({
-          name: currentGroup.text,
-          value: currentGroup.value,
-          schedules: groupScheduleData,
-        });
+          result.push({
+            name: currentGroup.text,
+            value: currentGroup.value,
+            schedules: groupScheduleData,
+          });
 
-        counts.current += 1;
-        console.log(counts);
+          counts.current += 1;
+          console.log(counts);
+        }
+
+        await page.close();
+        await browser.close();
+
+        if (result.length) {
+          await setScheduleDB(JSON.stringify(result));
+        }
+
+        setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+        return result;
+      } catch (e) {
+        await page.close();
+        await browser.close();
+
+        setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
+        console.log("parse error");
       }
-
-      await page.close();
-      await browser.close();
-
-      if (result.length) {
-        await setScheduleDB(JSON.stringify(result));
-      }
-
-      setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
-      return result;
     }
   } catch (e) {
-    setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
-    console.log(e);
+    console.log("auth error");
     throw e;
   }
 };
