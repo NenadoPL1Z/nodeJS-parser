@@ -32,6 +32,8 @@ export const parseSchedule = async () => {
     if (checkAuthUser(authPage)) {
       const { browser, page } = authPage;
 
+      const startParse = new Date().toString();
+
       try {
         await page.goto(SCHEDULE_URL, { timeout: MICRO_TIMEOUT_PARSER });
 
@@ -71,7 +73,7 @@ export const parseSchedule = async () => {
         await browser.close();
 
         if (result.length) {
-          await setScheduleDB(JSON.stringify(result));
+          await setScheduleDB(JSON.stringify(result), startParse);
         }
 
         setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
@@ -86,6 +88,7 @@ export const parseSchedule = async () => {
     }
   } catch (e) {
     console.log("auth error");
+    setTimeout(parseSchedule, SCHEDULE_UPDATE_INTERVAL);
     throw e;
   }
 };

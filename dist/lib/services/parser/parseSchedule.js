@@ -17,6 +17,7 @@ const parseSchedule = async () => {
         const authPage = (await (0, authUser_1.authUser)(constants_1.ADMIN_LOGIN, constants_1.ADMIN_PASSWORD));
         if ((0, authUser_1.checkAuthUser)(authPage)) {
             const { browser, page } = authPage;
+            const startParse = new Date().toString();
             try {
                 await page.goto(SCHEDULE_URL, { timeout: constants_1.MICRO_TIMEOUT_PARSER });
                 const groupListData = await page.evaluate(services_1.getGroupListData);
@@ -46,7 +47,7 @@ const parseSchedule = async () => {
                 await page.close();
                 await browser.close();
                 if (result.length) {
-                    await (0, services_1.setScheduleDB)(JSON.stringify(result));
+                    await (0, services_1.setScheduleDB)(JSON.stringify(result), startParse);
                 }
                 setTimeout(exports.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
                 return result;
@@ -61,6 +62,7 @@ const parseSchedule = async () => {
     }
     catch (e) {
         console.log("auth error");
+        setTimeout(exports.parseSchedule, constants_1.SCHEDULE_UPDATE_INTERVAL);
         throw e;
     }
 };

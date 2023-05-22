@@ -102,11 +102,11 @@ export const getScheduleData = () => {
   return schedulesData;
 };
 
-export const setScheduleDB = async (result: string) => {
+export const setScheduleDB = async (result: string, date: string) => {
   if (result) {
     await ScheduleModel.update(
       {
-        ruUpdateTime: new Date().toString(),
+        ruUpdateTime: date,
         result,
       },
       { where: { id: 1 } },

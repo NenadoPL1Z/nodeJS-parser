@@ -71,10 +71,10 @@ const getScheduleData = () => {
     return schedulesData;
 };
 exports.getScheduleData = getScheduleData;
-const setScheduleDB = async (result) => {
+const setScheduleDB = async (result, date) => {
     if (result) {
         await app_1.ScheduleModel.update({
-            ruUpdateTime: new Date().toString(),
+            ruUpdateTime: date,
             result,
         }, { where: { id: 1 } })
             .then(() => {
