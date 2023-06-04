@@ -33,7 +33,7 @@ export const ScheduleModel = sequelize.define(
 );
 
 export const TeacherModel = sequelize.define(
-  "Schedule",
+  "Teacher",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
     ruUpdateTime: { type: DataTypes.STRING },

@@ -7,12 +7,7 @@ import {
 } from "../../constants/constants";
 import { BrowserModel } from "../../models/BrowserModel";
 import { GroupSchedulesModel } from "../../models/ScheduleModel";
-import {
-  getGroupListData,
-  getScheduleData,
-  setScheduleDB,
-  setTeacherDB,
-} from "../services";
+import { getGroupListData, getScheduleData, setTeacherDB } from "../services";
 
 const SCHEDULE_URL =
   "https://moodle.preco.ru/blocks/lkstudents/sheduleonline.php";

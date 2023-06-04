@@ -28,7 +28,7 @@ exports.ScheduleModel = exports.sequelize.define("Schedule", {
     ruUpdateTime: { type: sequelize_1.DataTypes.STRING },
     result: { type: sequelize_1.DataTypes.STRING(300000) },
 }, { tableName: "Schedule", freezeTableName: true });
-exports.TeacherModel = exports.sequelize.define("Schedule", {
+exports.TeacherModel = exports.sequelize.define("Teacher", {
     id: { type: sequelize_1.DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
     ruUpdateTime: { type: sequelize_1.DataTypes.STRING },
     result: { type: sequelize_1.DataTypes.STRING(300000) },
