@@ -1,6 +1,6 @@
 import express from "express";
 import { LessonModel, IScheduleModel } from "../models/ScheduleModel";
-import { ScheduleModel } from "../../app";
+import { ScheduleModel, TeacherModel } from "../../app";
 
 type SuccessArg = { key?: string; data: any };
 type GroupListItem = { text: string; value: string };
@@ -20,11 +20,11 @@ export const sendErrorResponse = (res: express.Response) => {
     res.json({ error });
   };
 };
-export const getGroupListData = () => {
+export const getGroupListData = (selector = "#id_listgroups") => {
   const result: GroupListArr = [];
 
   const innerSelectElement = document.querySelector(
-    "#id_listgroups",
+    selector,
   ) as HTMLSelectElement;
 
   const optionElementsArr = innerSelectElement.children;
@@ -115,6 +115,26 @@ export const setScheduleDB = async (result: string, date: string) => {
         console.log("success save");
       })
       .catch(() => {
+        console.log("error save");
+      });
+  } else {
+    console.log("empty result");
+  }
+};
+
+export const setTeacherDB = async (result: string, date: string) => {
+  if (result) {
+    await TeacherModel.update(
+      {
+        ruUpdateTime: date,
+        result,
+      },
+      { where: { id: 1 } },
+    )
+      .then(() => {
+        console.log("success save");
+      })
+      .catch((e) => {
         console.log("error save");
       });
   } else {

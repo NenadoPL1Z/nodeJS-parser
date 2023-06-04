@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ScheduleModel = exports.sequelize = void 0;
+exports.TeacherModel = exports.ScheduleModel = exports.sequelize = void 0;
 const express_1 = __importDefault(require("express"));
 const pg_1 = __importDefault(require("pg"));
 const cors_1 = __importDefault(require("cors"));
@@ -13,6 +13,8 @@ const parseSchedule_1 = require("./lib/services/parser/parseSchedule");
 const sequelize_1 = require("sequelize");
 const getSchedule_1 = require("./lib/services/api/getSchedule");
 const getUser_1 = require("./lib/services/api/getUser");
+const getScheduleTeachers_1 = require("./lib/services/api/getScheduleTeachers");
+const parseTeacher_1 = require("./lib/services/parser/parseTeacher");
 const app = (0, express_1.default)();
 exports.sequelize = new sequelize_1.Sequelize("postgres://admin:omibTSgMhq7VG92uozcDXOsud7UMrg4J@dpg-chgb95u7avjbbju9hui0-a.oregon-postgres.render.com/preco", {
     dialect: "postgres",
@@ -26,6 +28,11 @@ exports.ScheduleModel = exports.sequelize.define("Schedule", {
     ruUpdateTime: { type: sequelize_1.DataTypes.STRING },
     result: { type: sequelize_1.DataTypes.STRING(300000) },
 }, { tableName: "Schedule", freezeTableName: true });
+exports.TeacherModel = exports.sequelize.define("Schedule", {
+    id: { type: sequelize_1.DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
+    ruUpdateTime: { type: sequelize_1.DataTypes.STRING },
+    result: { type: sequelize_1.DataTypes.STRING(300000) },
+}, { tableName: "Teacher", freezeTableName: true });
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(body_parser_1.default.urlencoded({
     extended: true,
@@ -35,11 +42,13 @@ app.get("/", (req, res) => {
     res.json("Preco parser");
 });
 app.get("/api/schedule", getSchedule_1.getSchedule);
+app.get("/api/schedule/teacher", getScheduleTeachers_1.getScheduleTeachers);
 app.post("/api/auth/login", getUser_1.getUser);
 app.listen(constants_1.PORT, async () => {
     console.log(`Example app listening on port ${constants_1.PORT}`);
     try {
         await exports.sequelize.authenticate();
+        await exports.sequelize.sync({ force: true });
         console.log("Connection has been established successfully.");
     }
     catch (error) {
@@ -52,6 +61,7 @@ app.listen(constants_1.PORT, async () => {
     else {
         console.log("parse");
         (0, parseSchedule_1.parseSchedule)().finally();
+        (0, parseTeacher_1.parseTeacher)().finally();
     }
 });
 //# sourceMappingURL=app.js.map

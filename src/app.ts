@@ -7,6 +7,8 @@ import { parseSchedule } from "./lib/services/parser/parseSchedule";
 import { DataTypes, Sequelize } from "sequelize";
 import { getSchedule } from "./lib/services/api/getSchedule";
 import { getUser } from "./lib/services/api/getUser";
+import { getScheduleTeachers } from "./lib/services/api/getScheduleTeachers";
+import { parseTeacher } from "./lib/services/parser/parseTeacher";
 
 const app = express();
 
@@ -30,6 +32,16 @@ export const ScheduleModel = sequelize.define(
   { tableName: "Schedule", freezeTableName: true },
 );
 
+export const TeacherModel = sequelize.define(
+  "Schedule",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
+    ruUpdateTime: { type: DataTypes.STRING },
+    result: { type: DataTypes.STRING(300000) },
+  },
+  { tableName: "Teacher", freezeTableName: true },
+);
+
 app.use(cors({ origin: "*" }));
 app.use(
   bodyParser.urlencoded({
@@ -43,6 +55,7 @@ app.get("/", (req: express.Request, res: express.Response) => {
 });
 
 app.get("/api/schedule", getSchedule);
+app.get("/api/schedule/teacher", getScheduleTeachers);
 app.post("/api/auth/login", getUser);
 
 app.listen(PORT, async () => {
@@ -50,6 +63,7 @@ app.listen(PORT, async () => {
 
   try {
     await sequelize.authenticate();
+    await sequelize.sync({ force: true });
     console.log("Connection has been established successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
@@ -60,6 +74,8 @@ app.listen(PORT, async () => {
     return;
   } else {
     console.log("parse");
+
     parseSchedule().finally();
+    parseTeacher().finally();
   }
 });

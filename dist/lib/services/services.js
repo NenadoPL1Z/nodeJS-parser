@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setScheduleDB = exports.getScheduleData = exports.getGroupListData = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
+exports.setTeacherDB = exports.setScheduleDB = exports.getScheduleData = exports.getGroupListData = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
 const app_1 = require("../../app");
 const sendSuccessResponse = (res) => {
     return ({ key = "data", data }) => {
@@ -17,9 +17,9 @@ const sendErrorResponse = (res) => {
     };
 };
 exports.sendErrorResponse = sendErrorResponse;
-const getGroupListData = () => {
+const getGroupListData = (selector = "#id_listgroups") => {
     const result = [];
-    const innerSelectElement = document.querySelector("#id_listgroups");
+    const innerSelectElement = document.querySelector(selector);
     const optionElementsArr = innerSelectElement.children;
     for (let i = 0; i < optionElementsArr.length; i++) {
         const optionElement = optionElementsArr[i];
@@ -89,4 +89,22 @@ const setScheduleDB = async (result, date) => {
     }
 };
 exports.setScheduleDB = setScheduleDB;
+const setTeacherDB = async (result, date) => {
+    if (result) {
+        await app_1.TeacherModel.update({
+            ruUpdateTime: date,
+            result,
+        }, { where: { id: 1 } })
+            .then(() => {
+            console.log("success save");
+        })
+            .catch((e) => {
+            console.log("error save");
+        });
+    }
+    else {
+        console.log("empty result");
+    }
+};
+exports.setTeacherDB = setTeacherDB;
 //# sourceMappingURL=services.js.map
